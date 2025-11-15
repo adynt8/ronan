@@ -1,6 +1,6 @@
 // Discord OAuth Configuration
 const DISCORD_CONFIG = {
-    clientId: 'YOUR_DISCORD_CLIENT_ID', // Replace with your Discord application client ID
+    clientId: '1438380414837198980', // Replace with your Discord application client ID
     redirectUri: window.location.origin + '/discord-callback.html',
     scopes: ['identify', 'webhook.incoming'],
     apiEndpoint: 'https://discord.com/api/v10'
@@ -80,7 +80,7 @@ async function handleDiscordCallback(code, state) {
             },
             body: new URLSearchParams({
                 client_id: DISCORD_CONFIG.clientId,
-                client_secret: 'YOUR_DISCORD_CLIENT_SECRET', // In production, this should be handled server-side
+                client_secret: 'Y18CEUTMr-Yppqtq3fj3tf2U8ZeuHFM-', // In production, this should be handled server-side
                 grant_type: 'authorization_code',
                 code: code,
                 redirect_uri: DISCORD_CONFIG.redirectUri
