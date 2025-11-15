@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Preview - PlsSize.Me</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        .preview-container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .discord-embed {
+            background: #2f3136;
+            border-left: 4px solid #5865F2;
+            border-radius: 4px;
+            padding: 16px;
+            margin: 20px 0;
+            font-family: 'Whitney', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        }
+        .embed-title {
+            color: #00b0f4;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .embed-description {
+            color: #dcddde;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+        .embed-fields {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        .embed-field {
+            min-width: 0;
+        }
+        .embed-field-name {
+            color: #b9bbbe;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .embed-field-value {
+            color: #dcddde;
+            font-size: 14px;
+        }
+        .embed-footer {
+            color: #b9bbbe;
+            font-size: 12px;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #4f545c;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .example-box {
+            background: #f0f0f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .discord-dark {
+            background: #36393f;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .message-content {
+            color: #dcddde;
+            margin-bottom: 8px;
+        }
+        .bot-tag {
+            background: #5865F2;
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 10px;
+            font-weight: 600;
+            margin-left: 6px;
+        }
+        .username {
+            color: #fff;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-container">
+        <h1>Discord Integration Preview</h1>
+        <p>This is what your synced results will look like in Discord.</p>
+
+        <h2>Example Discord Message</h2>
+        <div class="discord-dark">
+            <div class="username">
+                PlsSize.Me
+                <span class="bot-tag">BOT</span>
+            </div>
+            <div class="discord-embed">
+                <div class="embed-title">📊 PlsSize.Me Results</div>
+                <div class="embed-description">New measurement results have been recorded</div>
+                
+                <div class="embed-fields">
+                    <div class="embed-field">
+                        <div class="embed-field-name">📏 Erect Length</div>
+                        <div class="embed-field-value">15.2 cm</div>
+                    </div>
+                    <div class="embed-field">
+                        <div class="embed-field-name">⭕ Erect Girth</div>
+                        <div class="embed-field-value">12.0 cm</div>
+                    </div>
+                    <div class="embed-field">
+                        <div class="embed-field-name">&nbsp;</div>
+                        <div class="embed-field-value">&nbsp;</div>
+                    </div>
+                    <div class="embed-field">
+                        <div class="embed-field-name">📏 Flaccid Length</div>
+                        <div class="embed-field-value">9.5 cm</div>
+                    </div>
+                    <div class="embed-field">
+                        <div class="embed-field-name">⭕ Flaccid Girth</div>
+                        <div class="embed-field-value">9.2 cm</div>
+                    </div>
+                    <div class="embed-field">
+                        <div class="embed-field-name">🔗 View Full Results</div>
+                        <div class="embed-field-value"><a href="#" style="color: #00b0f4;">Click here</a></div>
+                    </div>
+                </div>
+                
+                <div class="embed-footer">
+                    <span>PlsSize.Me - Privacy-first size calculator</span>
+                    <span id="current-time"></span>
+                </div>
+            </div>
+        </div>
+
+        <h2>Features</h2>
+        <div class="example-box">
+            <h3>✨ Rich Formatting</h3>
+            <ul>
+                <li>Color-coded Discord embed (blurple theme)</li>
+                <li>Organized field layout</li>
+                <li>Emoji indicators for each measurement</li>
+                <li>Timestamp for tracking</li>
+                <li>Direct link to full results</li>
+            </ul>
+        </div>
+
+        <div class="example-box">
+            <h3>🔒 Privacy Control</h3>
+            <ul>
+                <li>Choose which Discord channel receives posts</li>
+                <li>Use private channels for confidential data</li>
+                <li>Disconnect at any time</li>
+                <li>No data stored on external servers</li>
+            </ul>
+        </div>
+
+        <div class="example-box">
+            <h3>📊 Tracking</h3>
+            <ul>
+                <li>View sync count</li>
+                <li>See last sync timestamp</li>
+                <li>Track your measurement history</li>
+                <li>Share results with specific people</li>
+            </ul>
+        </div>
+
+        <h2>Customization Options</h2>
+        <p>The Discord webhook can be customized by:</p>
+        <ul>
+            <li><strong>Webhook Name:</strong> Change in Discord webhook settings</li>
+            <li><strong>Channel:</strong> Select any channel you have access to</li>
+            <li><strong>Avatar:</strong> Set a custom avatar for the webhook</li>
+            <li><strong>Permissions:</strong> Control who can see the messages</li>
+        </ul>
+
+        <h2>Sample Variations</h2>
+        
+        <h3>Minimal (Only Required Fields)</h3>
+        <div class="discord-dark">
+            <div class="username">
+                PlsSize.Me
+                <span class="bot-tag">BOT</span>
+            </div>
+            <div class="discord-embed">
+                <div class="embed-title">📊 PlsSize.Me Results</div>
+                <div class="embed-description">New measurement results have been recorded</div>
+                
+                <div class="embed-fields">
+                    <div class="embed-field">
+                        <div class="embed-field-name">📏 Erect Length</div>
+                        <div class="embed-field-value">14.8 cm</div>
+                    </div>
+                    <div class="embed-field">
+                        <div class="embed-field-name">⭕ Erect Girth</div>
+                        <div class="embed-field-value">11.5 cm</div>
+                    </div>
+                    <div class="embed-field">
+                        <div class="embed-field-name">🔗 View Full Results</div>
+                        <div class="embed-field-value"><a href="#" style="color: #00b0f4;">Click here</a></div>
+                    </div>
+                </div>
+                
+                <div class="embed-footer">
+                    <span>PlsSize.Me - Privacy-first size calculator</span>
+                </div>
+            </div>
+        </div>
+
+        <h2>Getting Started</h2>
+        <ol>
+            <li>Set up your Discord application following the <a href="discord-setup.html">setup guide</a></li>
+            <li>Create a webhook in your Discord server</li>
+            <li>Connect your Discord account on the main page</li>
+            <li>Configure your webhook URL</li>
+            <li>Run a calculation and click "Sync to Discord"</li>
+        </ol>
+
+        <div class="cta-stack" style="margin-top: 40px;">
+            <button type="button" onclick="window.location.href='discord-setup.html'" class="button">
+                View Setup Guide
+            </button>
+            <button type="button" onclick="window.location.href='index.html'" class="secondary">
+                Back to Calculator
+            </button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 PlsSize.Me. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Update timestamp
+        document.getElementById('current-time').textContent = new Date().toLocaleTimeString();
+    </script>
+</body>
+</html>

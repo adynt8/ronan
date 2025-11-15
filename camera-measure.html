@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlsSize.Me - Camera Measurement</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        #video, #canvas {
+            max-width: 100%;
+            height: auto;
+        }
+        .fade-in {
+            animation: fadeIn 1s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        #calibration-instructions {
+            display: none;
+            background-color: #f9f9f9;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Camera Measurement</h1>
+        <p id="instructions" class="fade-in">Use your camera or upload an image to measure. Please ensure proper lighting and follow the on-screen instructions.</p>
+        
+        <div id="camera-container">
+            <video id="video" autoplay playsinline></video>
+            <canvas id="canvas" style="display:none;"></canvas>
+        </div>
+        
+        <button id="capture-btn" class="fade-in">Capture Image</button>
+        <input type="file" id="file-input" accept="image/*" style="display: none;">
+        <button id="upload-btn" class="fade-in">Upload Image</button>
+        <button id="calibrate-btn" style="display:none;" class="fade-in">Calibrate</button>
+        <button id="measure-btn" style="display:none;" class="fade-in">Measure</button>
+        
+        <div id="result" class="fade-in"></div>
+        
+        <div id="calibration-instructions" class="fade-in">
+            <strong>Calibration Instructions:</strong><br>
+            1. Place a credit card or ID card in the image.<br>
+            2. Draw a line along the long edge of the card.<br>
+            3. Select the type of card you used when prompted.
+        </div>
+        
+        <button onclick="window.location.href='index.html'" class="button fade-in">Back to Calculator</button>
+    </div>
+
+    <script src="scripts/cameraMeasure.js"></script>
+</body>
+</html>

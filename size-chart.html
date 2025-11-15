@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlsSize.Me - Penis Size Distribution Chart</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>PlsSize.Me - Penis Size Distribution Chart</h1>
+        <div class="chart-container">
+            <canvas id="sizeChart"></canvas>
+        </div>
+        <a href="index.html" class="button" id="back-button">Back to Calculator</a>
+    </div>
+
+    <script>
+        const stats = {
+            cm: {erectLength: { avg: 13.12, stdDev: 2.66 }, erectGirth: { avg: 11.66, stdDev: 1.10 }},
+            in: {erectLength: { avg: 5.17, stdDev: 1.05 }, erectGirth: { avg: 4.59, stdDev: 0.43 }}
+        };
+
+        function normalDistribution(x, mean, stdDev) {
+            return Math.exp(-0.5 * Math.pow((x - mean) / stdDev, 2)) / (stdDev * Math.sqrt(2 * Math.PI));
+        }
+
+        function createChart(unit, erectLength, erectGirth) {
+            const ctx = document.getElementById('sizeChart').getContext('2d');
+            const lengthStats = stats[unit].erectLength;
+            const girthStats = stats[unit].erectGirth;
+
+            // Define size categories
+            const categories = [
+                { name: 'Micro', lengthMax: lengthStats.avg - 2 * lengthStats.stdDev, color: 'rgba(255, 0, 0, 0.1)' },
+                { name: 'Small', lengthMax: lengthStats.avg - lengthStats.stdDev, color: 'rgba(255, 165, 0, 0.1)' },
+                { name: 'Average', lengthMax: lengthStats.avg + lengthStats.stdDev, color: 'rgba(0, 255, 0, 0.1)' },
+                { name: 'Large', lengthMax: lengthStats.avg + 2 * lengthStats.stdDev, color: 'rgba(0, 0, 255, 0.1)' },
+                { name: 'Huge', lengthMax: Infinity, color: 'rgba(128, 0, 128, 0.1)' }
+            ];
+
+            const data = [];
+            const step = unit === 'cm' ? 0.5 : 0.25;
+            const range = 3; // Plot 3 standard deviations in each direction
+
+            for (let length = Math.floor((lengthStats.avg - range * lengthStats.stdDev) / step) * step; 
+                 length <= Math.ceil((lengthStats.avg + range * lengthStats.stdDev) / step) * step; 
+                 length += step) {
+                for (let girth = Math.floor((girthStats.avg - range * girthStats.stdDev) / step) * step; 
+                     girth <= Math.ceil((girthStats.avg + range * girthStats.stdDev) / step) * step; 
+                     girth += step) {
+                    const lengthProb = normalDistribution(length, lengthStats.avg, lengthStats.stdDev);
+                    const girthProb = normalDistribution(girth, girthStats.avg, girthStats.stdDev);
+                    const combinedProb = lengthProb * girthProb;
+                    data.push({x: length, y: girth, r: combinedProb * 1000});
+                }
+            }
+
+            const chart = new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'Size Distribution',
+                        data: data,
+                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    },
+                    {
+                        label: 'Your Size',
+                        data: [{x: erectLength, y: erectGirth}],
+                        backgroundColor: 'red',
+                        pointRadius: 8,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            title: {
+                                display: true,
+                                text: `Length (${unit})`
+                            },
+                            min: lengthStats.avg - 3 * lengthStats.stdDev,
+                            max: lengthStats.avg + 3 * lengthStats.stdDev,
+                        },
+                        y: {
+                            type: 'linear',
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: `Girth (${unit})`
+                            },
+                            min: girthStats.avg - 3 * girthStats.stdDev,
+                            max: girthStats.avg + 3 * girthStats.stdDev,
+                        }
+                    },
+                    plugins: {
+                        annotation: {
+                            annotations: categories.map((category, index) => ({
+                                type: 'box',
+                                xMin: index === 0 ? lengthStats.avg - 3 * lengthStats.stdDev : categories[index - 1].lengthMax,
+                                xMax: category.lengthMax,
+                                yMin: girthStats.avg - 3 * girthStats.stdDev,
+                                yMax: girthStats.avg + 3 * girthStats.stdDev,
+                                backgroundColor: category.color,
+                                borderColor: 'transparent',
+                                label: {
+                                    content: category.name,
+                                    enabled: true,
+                                    position: 'center',
+                                    font: {
+                                        size: 20,
+                                        weight: 'bold'
+                                    },
+                                    color: 'black',
+                                    rotation: 270
+                                }
+                            }))
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `Length: ${context.parsed.x.toFixed(2)} ${unit}, Girth: ${context.parsed.y.toFixed(2)} ${unit}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const encodedParams = urlParams.get('d');
+            const [unit, erectLength, flaccidLength, erectGirth, flaccidGirth] = atob(encodedParams).split(',');
+
+            if (unit && !isNaN(erectLength) && !isNaN(erectGirth)) {
+                createChart(unit, parseFloat(erectLength), parseFloat(erectGirth));
+            } else {
+                document.querySelector('.chart-container').innerHTML = '<p>Error: Invalid or missing data.</p>';
+            }
+
+            // Add event listener to the back button
+            document.querySelector('.back-button').addEventListener('click', function(e) {
+                e.preventDefault();
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
+</body>
+</html>

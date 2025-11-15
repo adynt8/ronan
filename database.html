@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z4Q23E9QXZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-Z4Q23E9QXZ');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlsSize.Me Database</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>PlsSize.Me Database</h1>
+        <button onclick="window.location.href='allDatabaseInfo.html'" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md mt-4">View All Database Information</button>
+        <div id="averages" class="result-box">
+            <p>Average Erect Length: <span id="avgErectLength">0</span></p>
+            <p>Average Erect Girth: <span id="avgErectGirth">0</span></p>
+            <p>Average Flaccid Length: <span id="avgFlaccidLength">0</span></p>
+            <p>Average Flaccid Girth: <span id="avgFlaccidGirth">0</span></p>
+        </div>
+        <div class="notice">
+            <p><strong>Note:</strong> The data presented here may be significantly skewed until a larger number of entries are collected. Please interpret the results with caution.</p>
+        </div>
+        <table id="databaseTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Visitor ID</th>
+                    <th>Unit</th>
+                    <th>Erect Length</th>
+                    <th>Erect Girth</th>
+                    <th>Flaccid Length</th>
+                    <th>Flaccid Girth</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data will be inserted here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="scripts/database.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</body>
+</html>

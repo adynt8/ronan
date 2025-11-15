@@ -1,0 +1,912 @@
+
+<!-- Comparison Style -->
+
+<style>
+    .entry-content--content div.ad-unit--mobile {
+      display: none;
+    }
+    article .comparison-container.nsfw {
+      display: table;
+      margin: 50px auto 25px;
+      max-width: 728px;
+    }
+    article .nsfw-toggle {
+      z-index: 10;
+    }
+    @container (min-width: 800px) {
+      article .nsfw-cover {
+        width: calc(100% + 35px);
+      }
+    }
+    .entry-content {
+      container-type: inline-size;
+    }
+    #penis-comparison {
+      display: grid;
+      gap: 25px;
+      grid-auto-flow: dense;
+      grid-template-columns: 1fr 1fr;
+      margin: 25px auto;
+      width: fit-content;
+    }
+    @media (max-width: 480px) {
+      #penis-comparison {
+        margin: 0 -20px;
+        transform: scale(0.9);
+      }
+    }
+    @container (min-width: 800px) {
+      #penis-comparison {
+        gap: 25px 55px;
+        grid-template-columns: 200px repeat(2, min-content);
+      }
+    }
+    #general-settings {
+      display: contents;
+      text-align: center;
+    }
+    #general-settings h3 {
+      border-bottom: 1px solid var(--container-border-color);
+      font-size: 20px;
+      height: 45px;
+      margin: 0 auto 10px;
+      padding: 14px 50px;
+      width: fit-content;
+    }
+    #settings-toggles {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0 25px;
+      grid-column: 1 / span 2;
+      justify-content: space-around;
+    }
+    #settings-toggles .selector-buttons--button {
+      padding: 5px 10px;
+    }
+    @container (min-width: 800px) {
+      #settings-toggles {
+        grid-column: 1;
+      }
+      #settings-toggles .selector-buttons--button {
+        padding: var(--link-cta-padding);
+      }
+    }
+    #penis-comparison input[type="range"] {
+      display: block;
+      width: 100%;
+    }
+    .skin-tone {
+      display: block;
+    }
+    .skin-tone input {
+      min-width: 150px;
+    }
+    span:has(>input[id*="foreskin"]:checked) ~ .glans-setting {
+      display: none;
+    }
+    .penis-comparison {
+      display: contents;
+    }
+    #penis-comparison.state-erect .penis-comparison#flaccid-comparison,
+    #penis-comparison.state-flaccid .penis-comparison#erect-comparison {
+      display: none;
+    }
+    @container (min-width: 800px) {
+      .penis-comparison {
+        grid-template-columns: 200px repeat(2,minmax(350px,1fr));
+      }
+    }
+    .penis-comparison * {
+      transition: 1s;
+    }
+    .penis-settings {
+      display: contents;
+    }
+    article .penis-settings h3 {
+      display: none;
+      font-size: 24px;
+      margin: 0 0 15px;
+    }
+    @container (min-width: 800px) {
+      .penis-settings {
+        display: grid;
+        gap: 25px;
+        grid-template-rows: min-content;
+      }
+      article .penis-settings h3 {
+        display: block;
+      }
+    }
+    .penis-settings div {
+    }
+    .penis-settings span {
+      display: block;
+      margin: 0 0 10px;
+    }
+    .penis-settings .bold-label {
+      align-items: center;
+      display: grid;
+      font-size: 18px;
+      font-weight: 900;
+      grid-template-columns: 80px 1fr;
+    }
+    .penis-settings .bold-label input[type="checkbox"] {
+      margin: 0 auto;
+      transform: scale(1.5);
+    }
+    .penis-length {
+      filter: drop-shadow(0px 0px 5px rgba(0,0,0,0.1));
+      grid-row: 4;
+      justify-self: center;
+    }
+    @container (min-width: 800px) {
+      .penis-length {
+        grid-row: 2;
+      }
+    }
+    .penis-erect-length {
+      align-self: flex-end;
+      margin: 50px 0 0;
+    }
+    #penis-a-erect-length,
+    #penis-a-flaccid-length {
+      grid-column: 1;
+    }
+    #penis-b-erect-length,
+    #penis-b-flaccid-length {
+      grid-column: 2;
+    }
+    @container (min-width: 800px) {
+      #penis-a-erect-length,
+      #penis-a-flaccid-length {
+        grid-column: 2;
+      }
+      #penis-b-erect-length,
+      #penis-b-flaccid-length {
+        grid-column: 3;
+      }
+    }
+    .penis-girth {
+      height: 100%;
+    }
+    .penis-body {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      position: relative;
+      z-index: 1;
+    }
+    .penis-shaft {
+      background-color: #bc9e76;
+      background: linear-gradient(90deg, #9C8566, #b79a74 15%, #bc9e75 30%, #bb9d75, #bc9e75 70%, #b79a74 85%, #9c8566);
+      border-radius: 10% 10% 0 0 / 20% 20% 0 0;
+      flex: 1;
+      margin-top: -20%;
+      position: relative;
+      width: 100%;
+      z-index: 2;
+    }
+    .foreskin-on .penis-shaft {
+      border-radius: 100px 100px 0 0 / 150px 150px 0 0 !important;
+      box-shadow: inset 0 25px 25px -25px #fff;
+      margin: 0;
+    }
+    .penis-head {
+      aspect-ratio: 1;
+      background: radial-gradient(95% 100% at top, rgba(192,125,109,0) 80%, rgb(156 105 93 / 29%) 90%, rgb(156 105 93) 100%), radial-gradient(65% 100% at bottom, rgba(192,125,109,0) 60%, rgb(219 151 135 / 33%) 80%, rgb(219 151 135) 100%);
+      background-color: #c07d6d;
+      border-radius: 45% 45% 50% 50% / 75% 75% 25% 25%;
+      position: relative;
+      width: 100%;
+      z-index: 3;
+    }
+    .foreskin-on .penis-head {
+      display: none;
+    }
+    .penis-flaccid-length {
+      align-self: flex-start;
+      margin: 0 0 50px;
+      transform: scaleY(-1);
+    }
+    .foreskin-on .penis-flaccid-shaft {
+      box-shadow: inset 0 25px 25px -25px #000;
+    }
+    .penis-flaccid-head {
+      background: radial-gradient(60% 100% at bottom, rgba(192,125,109,0) 50%, rgb(156 105 93 / 29%) 85%, rgb(156 105 93) 100%), radial-gradient(95% 95% at top, rgba(192,125,109,0) 60%, rgb(219 151 135 / 33%) 80%, rgb(219 151 135) 100%);
+      background-color: #c07d6d;
+    }
+    :root {
+      --scale-major-color: #000;
+      --scale-minor-color: #00000070;
+    }
+    @media (prefers-color-scheme:dark) {
+      :root {
+        --scale-major-color: #fff;
+        --scale-minor-color: #ffffff70;
+      }
+    }
+    .penis-scale {
+      border-color: var(--scale-major-color);
+      border-style: solid;
+      border-width: 0 0 1px 0;
+      grid-row: 4;
+      grid-column: 1 / span 2;
+      background: repeating-linear-gradient(0deg, transparent, transparent 15.5px, var(--scale-minor-color) 16.5px, transparent 16.5px, transparent 32px, var(--scale-minor-color) 32px, transparent 33px, transparent 48.5px, var(--scale-minor-color) 48.5px, transparent 49.5px, transparent 64px, var(--scale-major-color) 65px, var(--scale-major-color) 66px);
+      margin: 0;
+      opacity: 0.5;
+      overflow: hidden;
+      position: relative;
+    }
+    .units-metric .penis-scale {
+      background: repeating-linear-gradient(0deg, transparent, transparent 25.4px, var(--scale-major-color) 25.4px, var(--scale-major-color) 26.4px);
+    }
+    #penis-flaccid-scale {
+      transform: scaleY(-1);
+    }
+    @container (min-width: 800px) {
+      .penis-scale {
+        grid-row: 2;
+        grid-column: 2 / span 2;
+        margin: 0 -35px;
+      }
+    }
+    .penis-scale ol {
+      bottom: 0;
+      display: flex;
+      flex-direction: column-reverse;
+      left: 0;
+      margin: 0 !important;
+      padding: 0;
+      position: absolute;
+    }
+    .penis-scale li {
+      display: block;
+      height: 66px;
+      margin: 0 !important;
+      transition: 0s;
+    }
+    .units-metric .penis-scale li {
+      height: 26.4px;
+    }
+    .penis-erect-scale li {
+    }
+    article .entry-content .penis-scale ol li::before {
+      content: counter(list-numbers) '"';
+      font-size: 12px;
+      font-weight: 300;
+      left: 2px;
+      right: 0;
+      transition: 0s;
+    }
+    article .entry-content .units-metric .penis-scale ol li::before {
+      content: counter(list-numbers) 'cm';
+    }
+    article .entry-content #penis-flaccid-scale ol li::before {
+      transform: scaleY(-1);
+    }
+    .penis-flaccid-scale {
+    }
+    #penis-comparison button {
+      background: var(--selector-button--unchecked-background-color);
+      border: 0;
+      border-radius: var(--link-cta-border-radius);
+      box-shadow: var(--link-cta-box-shadow);
+      color: var(--selector-button--unchecked-text-color);
+      cursor: pointer;
+      float: right;
+      font-size: 18px;
+      padding: var(--link-cta-padding);
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+    #comparison-selector.selector-menu {
+      color: var(--heading-text-color);
+      font-size: 20px;
+      height: 45px;
+      margin: 0 auto 10px;
+      padding: 0 30px 0 5px;
+      text-align: center;
+    }
+    #penis-comparison:not(.comparison-penis) .penis-b.penis-length {
+      margin: 0;
+    }
+    #penis-comparison:not(.comparison-penis) .penis-b .penis-body {
+      display: block;
+    }
+    #penis-comparison:not(.comparison-penis) .penis-b .penis-shaft {
+      background: none;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      border-radius: 0 !important;
+      box-shadow: none;
+      display: block;
+      height: 100%;
+      margin: 0;
+      width: 100%;
+    }
+    #penis-comparison:not(.comparison-penis) .penis-b .penis-flaccid-shaft {
+      transform: scaleY(-1);
+    }
+    #penis-comparison:not(.comparison-penis) .penis-b .penis-head {
+      display: none;
+    }
+    #penis-comparison:not(.comparison-penis) #penis-b-general .skin-tone,
+    #penis-comparison:not(.comparison-penis) #penis-b-erect-settings,
+    #penis-comparison:not(.comparison-penis) #penis-b-flaccid-settings {
+      display: none;
+    }
+    #penis-comparison.comparison-card .penis-b.penis-length {
+      height: 231px !important;
+    }
+    #penis-comparison.comparison-card .penis-b .penis-girth {
+      width: 148px !important;
+    }
+    #penis-comparison.comparison-card .penis-b .penis-shaft {
+      background-image: url(/wp-content/uploads/2023/04/playing-card.png);
+    }
+    #penis-comparison.comparison-chips .penis-b.penis-length {
+      height: 598px !important;
+    }
+    #penis-comparison.comparison-chips .penis-b .penis-girth {
+      width: 198px !important;
+    }
+    #penis-comparison.comparison-chips .penis-b .penis-shaft {
+      background-image: url(/wp-content/uploads/2023/04/chips.png);
+    }
+    #penis-comparison.comparison-lighter .penis-b.penis-length {
+      height: 207px !important;
+    }
+    #penis-comparison.comparison-lighter .penis-b .penis-girth {
+      width: 63px !important;
+    }
+    #penis-comparison.comparison-lighter .penis-b .penis-shaft {
+      background-image: url(/wp-content/uploads/2023/04/lighter.png);
+    }
+    #penis-comparison.comparison-pen .penis-b.penis-length {
+      height: 458px !important;
+    }
+    #penis-comparison.comparison-pen .penis-b .penis-girth {
+      width: 28px !important;
+    }
+    #penis-comparison.comparison-pen .penis-b .penis-shaft {
+      background-image: url(/wp-content/uploads/2023/04/pen.png);
+    }
+    #penis-comparison.comparison-soda .penis-b.penis-length {
+      height: 316px !important;
+    }
+    #penis-comparison.comparison-soda .penis-b .penis-girth {
+      width: 164px !important;
+    }
+    #penis-comparison.comparison-soda .penis-b .penis-shaft {
+      background-image: url(/wp-content/uploads/2023/04/soda.png);
+    }
+    /* Update colors to use CSS variables for consistency */
+    :root {
+      --primary-color: var(--theme-primary-color);
+      --secondary-color: var(--theme-secondary-color);
+      --text-color: var(--theme-text-color);
+      --background-color: var(--theme-background-color);
+    }
+
+    /* Update specific styles */
+    #penis-comparison {
+      background-color: var(--background-color);
+      color: var(--text-color);
+      font-family: var(--theme-font-family, sans-serif);
+    }
+
+    #penis-comparison button,
+    #penis-comparison select,
+    #penis-comparison input[type="range"] {
+      font-family: inherit;
+      color: var(--text-color);
+      background-color: var(--background-color);
+      border: 1px solid var(--primary-color);
+    }
+
+    #penis-comparison button:hover,
+    #penis-comparison select:hover {
+      background-color: var(--primary-color);
+      color: var(--background-color);
+    }
+    
+    </style>
+    
+    
+    
+    <div class="comparison-container nsfw"><label for="nsfw" class="nsfw-toggle"></label><label for="nsfw" class="nsfw-cover"></label>
+    <div class="state-erect units-inches comparison-penis" id="penis-comparison">
+      <div id="general-settings">
+        <div id="settings-toggles">
+          <div class="settings-toggle">
+            <input type="radio" class="selector-buttons--control" name="selector-units" id="selector-inches" value="selector-inches" checked="">
+            <input type="radio" class="selector-buttons--control" name="selector-units" id="selector-metric" value="selector-metric">
+            <div id="unit-selector" class="selector-buttons">
+              <label for="selector-inches" class="selector-buttons--button">Inches</label>
+              <label for="selector-metric" class="selector-buttons--button">Metric</label>
+            </div>
+          </div>
+    
+          <div class="settings-toggle">
+            <input type="radio" class="selector-buttons--control" name="selector-flaccid-erect" id="selector-erect" value="selector-erect" checked="">
+            <input type="radio" class="selector-buttons--control" name="selector-flaccid-erect" id="selector-flaccid" value="selector-flaccid">
+            <div id="flaccid-erect-selector" class="selector-buttons">
+              <label for="selector-erect" class="selector-buttons--button">Erect</label>
+              <label for="selector-flaccid" class="selector-buttons--button">Flaccid</label>
+            </div>
+          </div>
+        </div>
+    
+        <div id="penis-a-general">
+          <h3>You</h3>
+          <span class="skin-tone">Skin Tone: <input type="range" id="penis-a-skin-tone" name="penis-a-skin-tone" min="50" max="150" value="100" step="1" onchange="penisASkinTone(this)"></span>
+        </div>
+        <div id="penis-b-general">
+          <select id="comparison-selector" class="selector-menu">
+            <option value="penis" checked>Penis</option>
+            <option value="lighter">Lighter</option>
+            <option value="card">Playing Card</option>
+            <option value="pen">Pen</option>
+            <option value="soda">Soda Can</option>
+            <option value="chips">Chips Can</option>
+          </select>
+          <span class="skin-tone">Skin Tone: <input type="range" id="penis-b-skin-tone" name="penis-b-skin-tone" min="50" max="150" value="100" step="1" onchange="penisBSkinTone(this)"></span>
+        </div>
+      </div>
+      <div id="erect-comparison" class="penis-comparison">
+        <div class="penis-settings">
+          <div id="penis-a-erect-settings">
+            <h3>You:</h3>
+            <span id="set-penis-a-erect-length-label" class="bold-label">Length:</span>
+            <span id="set-penis-a-erect-girth-label" class="bold-label">Girth:</span>
+            <span id="set-penis-a-erect-foreskin" class="bold-label"><label for="penis-a-erect-foreskin">Foreskin:</label> <input type="checkbox" id="penis-a-erect-foreskin" checked></span>
+            <span class="glans-setting">Glans Width: <input type="range" id="glans-erect-width" name="glans-erect-width" min="75" max="125" value="100" step="1" onchange="glansErectWidth(this)"></span>
+            <span class="glans-setting">Glans Length: <input type="range" id="glans-erect-length" name="glans-erect-length" min="75" max="125" value="100" step="1" onchange="glansErectLength(this)"></span>
+          </div>
+          <div id="penis-b-erect-settings">
+            <h3>Compare:</h3>
+            <span id="set-penis-b-erect-length-label" class="bold-label">Length:</span>
+            <span id="set-penis-b-erect-girth-label" class="bold-label">Girth:</span>
+            <span id="set-penis-b-erect-foreskin" class="bold-label"><label for="penis-a-erect-foreskin">Foreskin:</label> <input type="checkbox" id="penis-b-erect-foreskin" checked></span>
+            <button onclick="setErectAverageB()">Set to average</button>
+          </div>
+        </div>
+        <div id="penis-erect-scale" class="penis-scale">
+          <ol><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
+        </div>
+        <div id="penis-a-erect-length" class="penis-length penis-erect-length penis-a foreskin-on">
+          <div id="penis-a-erect-girth" class="penis-girth penis-erect-girth">
+            <div id="penis-a-erect-body" class="penis-body">
+              <div id="penis-a-erect-head" class="penis-erect-head penis-head"></div>
+              <div id="penis-a-erect-shaft" class="penis-erect-shaft penis-shaft"></div>
+            </div>
+          </div>
+        </div>
+        <div id="penis-b-erect-length" class="penis-length penis-erect-length penis-b foreskin-on">
+          <div id="penis-b-erect-girth" class="penis-girth penis-erect-girth">
+            <div id="penis-b-erect-body" class="penis-body">
+              <div id="penis-b-erect-head" class="penis-erect-head penis-head"></div>
+              <div id="penis-b-erect-shaft" class="penis-erect-shaft penis-shaft"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+      <div id="flaccid-comparison" class="penis-comparison">
+        <div class="penis-settings">
+          <div id="penis-a-flaccid-settings">
+            <h3>You:</h3>
+            <span id="set-penis-a-flaccid-length-label" class="bold-label">Length:</span>
+            <span id="set-penis-a-flaccid-girth-label" class="bold-label">Girth:</span>
+            <span id="set-penis-a-flaccid-foreskin" class="bold-label"><label for="penis-a-flaccid-foreskin">Foreskin:</label> <input type="checkbox" id="penis-a-flaccid-foreskin" checked></span>
+            <span class="glans-setting">Glans Width: <input type="range" id="glans-flaccid-width" name="glans-flaccid-width" min="75" max="125" value="100" step="1" onchange="glansFlaccidWidth(this)"></span>
+            <span class="glans-setting">Glans Length: <input type="range" id="glans-flaccid-length" name="glans-flaccid-length" min="75" max="125" value="100" step="1" onchange="glansFlaccidLength(this)"></span>
+          </div>
+          <div id="penis-b-flaccid-settings">
+            <h3>Compare:</h3>
+            <span id="set-penis-b-flaccid-length-label" class="bold-label">Length:</span>
+            <span id="set-penis-b-flaccid-girth-label" class="bold-label">Girth:</span>
+            <span id="set-penis-b-flaccid-foreskin" class="bold-label"><label for="penis-a-erect-foreskin">Foreskin:</label> <input type="checkbox" id="penis-b-flaccid-foreskin" checked></span>
+            <button onclick="setFlaccidAverageB()">Set to average</button>
+          </div>
+        </div>
+        <div id="penis-flaccid-scale" class="penis-scale">
+          <ol><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
+        </div>
+        <div id="penis-a-flaccid-length" class="penis-length penis-flaccid-length penis-a foreskin-on">
+          <div id="penis-a-flaccid-girth" class="penis-girth penis-flaccid-girth">
+            <div id="penis-a-flaccid-body" class="penis-body">
+              <div id="penis-a-flaccid-head" class="penis-flaccid-head penis-head"></div>
+              <div id="penis-a-flaccid-shaft" class="penis-flaccid-shaft penis-shaft"></div>
+            </div>
+          </div>
+        </div>
+        <div id="penis-b-flaccid-length" class="penis-length penis-flaccid-length penis-b foreskin-on">
+          <div id="penis-b-flaccid-girth" class="penis-girth penis-flaccid-girth">
+            <div id="penis-b-flaccid-body" class="penis-body">
+              <div id="penis-b-flaccid-head" class="penis-flaccid-head penis-head"></div>
+              <div id="penis-b-flaccid-shaft" class="penis-flaccid-shaft penis-shaft"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    
+    
+    
+    <script type="text/javascript">
+    let avgErectLength = 550;
+    let avgErectGirth = 450;
+    let erectGirthRatio = 2.8;
+    let avgFlaccidLength = 350;
+    let avgFlaccidGirth = 350;
+    let flaccidGirthRatio = 3.14;
+    let scaleRatio = 0.66
+    
+    function generateSelectMenus() {
+      const setErectLengthA = document.createElement("select");
+      setErectLengthA.setAttribute("id", "set-penis-a-erect-length"); 
+      setErectLengthA.classList.add("selector-menu","set-penis-erect-length");
+    
+      const setErectGirthA = document.createElement("select");
+      setErectGirthA.setAttribute("id", "set-penis-a-erect-girth"); 
+      setErectGirthA.classList.add("selector-menu","set-penis-erect-girth");
+    
+      const setErectLengthB = document.createElement("select");
+      setErectLengthB.setAttribute("id", "set-penis-b-erect-length"); 
+      setErectLengthB.classList.add("selector-menu","set-penis-erect-length");
+    
+      const setErectGirthB = document.createElement("select");
+      setErectGirthB.setAttribute("id", "set-penis-b-erect-girth"); 
+      setErectGirthB.classList.add("selector-menu","set-penis-erect-girth");
+      
+      const setFlaccidLengthA = document.createElement("select");
+      setFlaccidLengthA.setAttribute("id", "set-penis-a-flaccid-length"); 
+      setFlaccidLengthA.classList.add("selector-menu","set-penis-flaccid-length");
+    
+      const setFlaccidGirthA = document.createElement("select");
+      setFlaccidGirthA.setAttribute("id", "set-penis-a-flaccid-girth"); 
+      setFlaccidGirthA.classList.add("selector-menu","set-penis-flaccid-girth");
+    
+      const setFlaccidLengthB = document.createElement("select");
+      setFlaccidLengthB.setAttribute("id", "set-penis-b-flaccid-length"); 
+      setFlaccidLengthB.classList.add("selector-menu","set-penis-flaccid-length");
+    
+      const setFlaccidGirthB = document.createElement("select");
+      setFlaccidGirthB.setAttribute("id", "set-penis-b-flaccid-girth"); 
+      setFlaccidGirthB.classList.add("selector-menu","set-penis-flaccid-girth");
+    
+      for (let i = 1; i <= 48; i++) {
+        const option = document.createElement("option");
+        option.text = (i * 0.25).toFixed(2) + '"';
+        option.value = i * 25;
+        option.dataset.inches = (i * 0.25).toFixed(2);
+        option.dataset.cm = (option.dataset.inches * 2.5).toFixed(1);
+        setErectLengthA.add(option);
+        setErectGirthA.add(option.cloneNode(true));
+        setErectLengthB.add(option.cloneNode(true));
+        setErectGirthB.add(option.cloneNode(true));
+        setFlaccidLengthA.add(option.cloneNode(true));
+        setFlaccidGirthA.add(option.cloneNode(true));
+        setFlaccidLengthB.add(option.cloneNode(true));
+        setFlaccidGirthB.add(option.cloneNode(true));
+      }
+      document.getElementById("set-penis-a-erect-length-label").appendChild(setErectLengthA);
+      document.getElementById("set-penis-a-erect-girth-label").appendChild(setErectGirthA);
+      document.getElementById("set-penis-b-erect-length-label").appendChild(setErectLengthB);
+      document.getElementById("set-penis-b-erect-girth-label").appendChild(setErectGirthB);
+      document.getElementById("set-penis-a-flaccid-length-label").appendChild(setFlaccidLengthA);
+      document.getElementById("set-penis-a-flaccid-girth-label").appendChild(setFlaccidGirthA);
+      document.getElementById("set-penis-b-flaccid-length-label").appendChild(setFlaccidLengthB);
+      document.getElementById("set-penis-b-flaccid-girth-label").appendChild(setFlaccidGirthB);
+    }
+    
+    function setAverageAll() {
+      const renderErectLength = document.querySelectorAll(".penis-erect-length");
+      const renderErectGirth = document.querySelectorAll(".penis-erect-girth");
+      const renderFlaccidLength = document.querySelectorAll(".penis-flaccid-length");
+      const renderFlaccidGirth = document.querySelectorAll(".penis-flaccid-girth");
+      const setErectLength = document.querySelectorAll(".set-penis-erect-length");
+      const setErectGirth = document.querySelectorAll(".set-penis-erect-girth");
+      const setFlaccidLength = document.querySelectorAll(".set-penis-flaccid-length");
+      const setFlaccidGirth = document.querySelectorAll(".set-penis-flaccid-girth");
+      for (let i = 0; i < renderErectLength.length; i++) {
+        renderErectLength[i].style.height = avgErectLength * scaleRatio + "px";
+        renderErectGirth[i].style.width = avgErectGirth / erectGirthRatio * scaleRatio + "px";
+        renderFlaccidLength[i].style.height = avgFlaccidLength * scaleRatio + "px";
+        renderFlaccidGirth[i].style.width = avgFlaccidGirth / flaccidGirthRatio * scaleRatio + "px";
+        setErectLength[i].value = avgErectLength;
+        setErectGirth[i].value = avgErectGirth;
+        setFlaccidLength[i].value = avgFlaccidLength;
+        setFlaccidGirth[i].value = avgFlaccidGirth;
+      }
+    }
+    
+    function menuEventListeners() {
+      const setErectLengthA = document.getElementById("set-penis-a-erect-length");
+      setErectLengthA.addEventListener("change", function() {
+        const selectMenu = document.getElementById("set-penis-a-erect-length");
+        const selectedValue = selectMenu.value;
+        const element = document.getElementById("penis-a-erect-length");
+        element.style.height = selectedValue * scaleRatio + "px";
+      });
+      const setErectGirthA = document.getElementById("set-penis-a-erect-girth");
+      setErectGirthA.addEventListener("change", function() {
+        const selectMenu = document.getElementById("set-penis-a-erect-girth");
+        const selectedValue = selectMenu.value;
+        const element = document.getElementById("penis-a-erect-girth");
+        element.style.width = selectedValue / erectGirthRatio * scaleRatio + "px";
+      });
+      const setErectLengthB = document.getElementById("set-penis-b-erect-length");
+      setErectLengthB.addEventListener("change", function() {
+        const selectMenu = document.getElementById("set-penis-b-erect-length");
+        const selectedValue = selectMenu.value;
+        const element = document.getElementById("penis-b-erect-length");
+        element.style.height = selectedValue * scaleRatio + "px";
+      });
+      const setErectGirthB = document.getElementById("set-penis-b-erect-girth");
+      setErectGirthB.addEventListener("change", function() {
+        const selectMenu = document.getElementById("set-penis-b-erect-girth");
+        const selectedValue = selectMenu.value;
+        const element = document.getElementById("penis-b-erect-girth");
+        element.style.width = selectedValue / erectGirthRatio * scaleRatio + "px";
+      });
+      const setFlaccidLengthA = document.getElementById("set-penis-a-flaccid-length");
+      setFlaccidLengthA.addEventListener("change", function() {
+        const selectMenu = document.getElementById("set-penis-a-flaccid-length");
+        const selectedValue = selectMenu.value;
+        const element = document.getElementById("penis-a-flaccid-length");
+        element.style.height = selectedValue * scaleRatio + "px";
+      });
+      const setFlaccidGirthA = document.getElementById("set-penis-a-flaccid-girth");
+      setFlaccidGirthA.addEventListener("change", function() {
+        const selectMenu = document.getElementById("set-penis-a-flaccid-girth");
+        const selectedValue = selectMenu.value;
+        const element = document.getElementById("penis-a-flaccid-girth");
+        element.style.width = selectedValue / flaccidGirthRatio * scaleRatio + "px";
+      });
+      const setFlaccidLengthB = document.getElementById("set-penis-b-flaccid-length");
+      setFlaccidLengthB.addEventListener("change", function() {
+        const selectMenu = document.getElementById("set-penis-b-flaccid-length");
+        const selectedValue = selectMenu.value;
+        const element = document.getElementById("penis-b-flaccid-length");
+        element.style.height = selectedValue * scaleRatio + "px";
+      });
+      const setFlaccidGirthB = document.getElementById("set-penis-b-flaccid-girth");
+      setFlaccidGirthB.addEventListener("change", function() {
+        const selectMenu = document.getElementById("set-penis-b-flaccid-girth");
+        const selectedValue = selectMenu.value;
+        const element = document.getElementById("penis-b-flaccid-girth");
+        element.style.width = selectedValue / flaccidGirthRatio * scaleRatio + "px";
+      });
+    }
+    
+    document.addEventListener("DOMContentLoaded", function() {
+      generateSelectMenus();
+      menuEventListeners();
+      setAverageAll();
+    });
+    
+    function setErectAverageB() {
+      const setErectLength = document.getElementById("set-penis-b-erect-length");
+      const setErectGirth = document.getElementById("set-penis-b-erect-girth");
+      const renderErectLength = document.getElementById("penis-b-erect-length");
+      const renderErectGirth = document.getElementById("penis-b-erect-girth");
+      setErectLength.value = avgErectLength;
+      setErectGirth.value = avgErectGirth;
+      renderErectLength.style.height = avgErectLength * scaleRatio + "px";
+      renderErectGirth.style.width = avgErectGirth / erectGirthRatio * scaleRatio + "px";
+    }
+    
+    function setFlaccidAverageB() {
+      const setFlaccidLength = document.getElementById("set-penis-b-flaccid-length");
+      const setFlaccidGirth = document.getElementById("set-penis-b-flaccid-girth");
+      const renderFlaccidLength = document.getElementById("penis-b-flaccid-length");
+      const renderFlaccidGirth = document.getElementById("penis-b-flaccid-girth");
+      setFlaccidLength.value = avgFlaccidLength;
+      setFlaccidGirth.value = avgFlaccidGirth;
+      renderFlaccidLength.style.height = avgFlaccidLength * scaleRatio + "px";
+      renderFlaccidGirth.style.width = avgFlaccidGirth / flaccidGirthRatio * scaleRatio + "px";
+    }
+    
+    function glansErectWidth(rangeInput) {
+      const glansWidth = rangeInput.value;
+      shaftTaper = (rangeInput.value * -0.4 + 50) + "% " + (rangeInput.value * -0.8 + 100) + "%";
+      const glans = document.getElementById("penis-a-erect-head");
+      const shaft = document.getElementById("penis-a-erect-shaft");
+      glans.style.width = glansWidth + "%";
+      shaft.style.borderTopLeftRadius = shaftTaper;
+      shaft.style.borderTopRightRadius = shaftTaper;
+    }
+    function glansErectLength(rangeInput) {
+      const value =  100 / rangeInput.value;
+      const element = document.getElementById("penis-a-erect-head");
+      element.style.aspectRatio = value;
+    }
+    function glansFlaccidWidth(rangeInput) {
+      const glansWidth = rangeInput.value;
+      const shaftTaper = (rangeInput.value * -0.4 + 50) + "% " + (rangeInput.value * -0.8 + 100) + "%";
+      const glans = document.getElementById("penis-a-flaccid-head");
+      const shaft = document.getElementById("penis-a-flaccid-shaft");
+      glans.style.width = glansWidth + "%";
+      shaft.style.borderTopLeftRadius = shaftTaper;
+      shaft.style.borderTopRightRadius = shaftTaper;
+    }
+    function glansFlaccidLength(rangeInput) {
+      const value =  100 / rangeInput.value;
+      const element = document.getElementById("penis-a-flaccid-head");
+      element.style.aspectRatio = value;
+    }
+    function penisASkinTone(rangeInput) {
+      const brightness = rangeInput.value / 100;
+      const saturate = (100 - rangeInput.value) / 200 + 1;
+      filter = "brightness(" + brightness + ") saturate(" + saturate + ")";
+      const erectElement = document.getElementById("penis-a-erect-body");
+      const flaccidElement = document.getElementById("penis-a-flaccid-body");
+      erectElement.style.filter = filter;
+      flaccidElement.style.filter = filter;
+    }
+    function penisBSkinTone(rangeInput) {
+      const brightness = rangeInput.value / 100;
+      const saturate = (100 - rangeInput.value) / 200 + 1;
+      filter = "brightness(" + brightness + ") saturate(" + saturate + ")";
+      const erectElement = document.getElementById("penis-b-erect-body");
+      const flaccidElement = document.getElementById("penis-b-flaccid-body");
+      erectElement.style.filter = filter;
+      flaccidElement.style.filter = filter;
+    }
+    
+    const stateSelectorErect = document.getElementById("selector-erect");
+    const stateSelectorFlaccid = document.getElementById("selector-flaccid");
+    const unitsSelectorInches = document.getElementById("selector-inches");
+    const unitsSelectorMetric = document.getElementById("selector-metric");
+    const comparisonDiv = document.getElementById("penis-comparison");
+    stateSelectorErect.addEventListener("change", function() {
+      comparisonDiv.classList.remove("state-flaccid");
+      comparisonDiv.classList.add("state-erect");
+    });
+    stateSelectorFlaccid.addEventListener("change", function() {
+      comparisonDiv.classList.remove("state-erect");
+      comparisonDiv.classList.add("state-flaccid");
+    });
+    unitsSelectorInches.addEventListener("change", function() {
+      comparisonDiv.classList.remove("units-metric");
+      comparisonDiv.classList.add("units-inches");
+    });
+    unitsSelectorMetric.addEventListener("change", function() {
+      comparisonDiv.classList.remove("units-inches");
+      comparisonDiv.classList.add("units-metric");
+    });
+    
+    
+    document.addEventListener("DOMContentLoaded", function() {
+      const setErectALength = document.getElementById("set-penis-a-erect-length");
+      const setErectAGirth = document.getElementById("set-penis-a-erect-girth");
+      const setErectBLength = document.getElementById("set-penis-b-erect-length");
+      const setErectBGirth = document.getElementById("set-penis-b-erect-girth");
+      const setFlaccidALength = document.getElementById("set-penis-a-flaccid-length");
+      const setFlaccidAGirth = document.getElementById("set-penis-a-flaccid-girth");
+      const setFlaccidBLength = document.getElementById("set-penis-b-flaccid-length");
+      const setFlaccidBGirth = document.getElementById("set-penis-b-flaccid-girth");
+      const inchesRadio = document.getElementById("selector-inches");
+      const metricRadio = document.getElementById("selector-metric");
+      
+      function convertToUnits(units) {
+        if (units === "metric") {
+          setErectALength.querySelectorAll("option").forEach((option) => {
+            option.textContent = option.dataset.cm + "cm";
+          });
+          setErectAGirth.querySelectorAll("option").forEach((option) => {
+            option.textContent = option.dataset.cm + "cm";
+          });
+          setErectBLength.querySelectorAll("option").forEach((option) => {
+            option.textContent = option.dataset.cm + "cm";
+          });
+          setErectBGirth.querySelectorAll("option").forEach((option) => {
+            option.textContent = option.dataset.cm + "cm";
+          });
+          setFlaccidALength.querySelectorAll("option").forEach((option) => {
+            option.textContent = option.dataset.cm + "cm";
+          });
+          setFlaccidAGirth.querySelectorAll("option").forEach((option) => {
+            option.textContent = option.dataset.cm + "cm";
+          });
+          setFlaccidBLength.querySelectorAll("option").forEach((option) => {
+            option.textContent = option.dataset.cm + "cm";
+          });
+          setFlaccidBGirth.querySelectorAll("option").forEach((option) => {
+            option.textContent = option.dataset.cm + "cm";
+          });
+        } else {
+          setErectALength.querySelectorAll("option").forEach((option) => {
+            option.textContent = option.dataset.inches + '"';
+          });
+          setErectAGirth.querySelectorAll("option").forEach((option) => {
+            option.textContent = option.dataset.inches + '"';
+          });
+          setErectBLength.querySelectorAll("option").forEach((option) => {
+            option.textContent = option.dataset.inches + '"';
+          });
+          setErectBGirth.querySelectorAll("option").forEach((option) => {
+            option.textContent = option.dataset.inches + '"';
+          });
+          setFlaccidALength.querySelectorAll("option").forEach((option) => {
+            option.textContent = option.dataset.inches + '"';
+          });
+          setFlaccidAGirth.querySelectorAll("option").forEach((option) => {
+            option.textContent = option.dataset.inches + '"';
+          });
+          setFlaccidBLength.querySelectorAll("option").forEach((option) => {
+            option.textContent = option.dataset.inches + '"';
+          });
+          setFlaccidBGirth.querySelectorAll("option").forEach((option) => {
+            option.textContent = option.dataset.inches + '"';
+          });
+        }
+      }
+      
+      inchesRadio.addEventListener("change", () => {
+        convertToUnits("inches");
+      });
+      
+      metricRadio.addEventListener("change", () => {
+        convertToUnits("metric");
+      });
+    });
+    
+    const penisAErectForeskin = document.getElementById("penis-a-erect-foreskin");
+    const penisBErectForeskin = document.getElementById("penis-b-erect-foreskin");
+    const penisAFlaccidForeskin = document.getElementById("penis-a-flaccid-foreskin");
+    const penisBFlaccidForeskin = document.getElementById("penis-b-flaccid-foreskin");
+    const penisAErectRender = document.getElementById("penis-a-erect-length");
+    const penisBErectRender = document.getElementById("penis-b-erect-length");
+    const penisAFlaccidRender = document.getElementById("penis-a-flaccid-length");
+    const penisBFlaccidRender = document.getElementById("penis-b-flaccid-length");
+    penisAErectForeskin.addEventListener("change", function() {
+      if (this.checked) {
+        penisAErectRender.classList.add("foreskin-on");
+        penisAErectRender.classList.remove("foreskin-off");
+      } else {
+        penisAErectRender.classList.remove("foreskin-on");
+        penisAErectRender.classList.add("foreskin-off");
+      }
+    });
+    penisBErectForeskin.addEventListener("change", function() {
+      if (this.checked) {
+        penisBErectRender.classList.add("foreskin-on");
+        penisBErectRender.classList.remove("foreskin-off");
+      } else {
+        penisBErectRender.classList.remove("foreskin-on");
+        penisBErectRender.classList.add("foreskin-off");
+      }
+    });
+    penisAFlaccidForeskin.addEventListener("change", function() {
+      if (this.checked) {
+        penisAFlaccidRender.classList.add("foreskin-on");
+        penisAFlaccidRender.classList.remove("foreskin-off");
+      } else {
+        penisAFlaccidRender.classList.remove("foreskin-on");
+        penisAFlaccidRender.classList.add("foreskin-off");
+      }
+    });
+    penisBFlaccidForeskin.addEventListener("change", function() {
+      if (this.checked) {
+        penisBFlaccidRender.classList.add("foreskin-on");
+        penisBFlaccidRender.classList.remove("foreskin-off");
+      } else {
+        penisBFlaccidRender.classList.remove("foreskin-on");
+        penisBFlaccidRender.classList.add("foreskin-off");
+      }
+    });
+    
+    const comparisonSelector = document.getElementById("comparison-selector");
+    comparisonSelector.addEventListener("change", function() {
+      comparisonDiv.classList.remove("comparison-penis", "comparison-soda", "comparison-lighter", "comparison-card", "comparison-pen", "comparison-chips");
+      comparisonDiv.classList.add("comparison-" + comparisonSelector.value);
+    });
+    </script>

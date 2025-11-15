@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Integration Setup - PlsSize.Me</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        .setup-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .setup-step {
+            background: #f9f9f9;
+            border-left: 4px solid #5865F2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        .setup-step h3 {
+            color: #5865F2;
+            margin-top: 0;
+        }
+        .setup-step code {
+            background: #2c2f33;
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        .warning-box {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .warning-box strong {
+            color: #856404;
+        }
+        .screenshot {
+            max-width: 100%;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="setup-container">
+        <h1>🎮 Discord Integration Setup Guide</h1>
+        <p>Follow these steps to connect PlsSize.Me to your Discord server and automatically sync your results.</p>
+        
+        <div class="warning-box">
+            <strong>⚠️ Privacy Notice:</strong> Results synced to Discord will be visible to anyone with access to the channel where the webhook posts. Make sure you're using a private channel if you want to keep your results confidential.
+        </div>
+
+        <div class="setup-step">
+            <h3>Step 1: Create a Discord Application</h3>
+            <ol>
+                <li>Go to the <a href="https://discord.com/developers/applications" target="_blank">Discord Developer Portal</a></li>
+                <li>Click "New Application" and give it a name (e.g., "PlsSize.Me")</li>
+                <li>Navigate to the "OAuth2" section in the left sidebar</li>
+                <li>Copy your <strong>Client ID</strong></li>
+                <li>Generate and copy your <strong>Client Secret</strong> (keep this private!)</li>
+            </ol>
+        </div>
+
+        <div class="setup-step">
+            <h3>Step 2: Configure OAuth2 Settings</h3>
+            <ol>
+                <li>In the OAuth2 section, find "Redirects"</li>
+                <li>Add this URL: <code>https://yourdomain.com/discord-callback.html</code></li>
+                <li>Replace <code>yourdomain.com</code> with your actual domain</li>
+                <li>Click "Save Changes"</li>
+            </ol>
+        </div>
+
+        <div class="setup-step">
+            <h3>Step 3: Update Configuration</h3>
+            <ol>
+                <li>Open <code>scripts/discordOAuth.js</code> in a text editor</li>
+                <li>Replace <code>YOUR_DISCORD_CLIENT_ID</code> with your actual Client ID</li>
+                <li>Replace <code>YOUR_DISCORD_CLIENT_SECRET</code> with your actual Client Secret</li>
+                <li>Save the file</li>
+            </ol>
+            <div class="warning-box">
+                <strong>⚠️ Security Warning:</strong> In a production environment, the client secret should NEVER be exposed in client-side code. You should set up a backend server to handle the OAuth flow securely.
+            </div>
+        </div>
+
+        <div class="setup-step">
+            <h3>Step 4: Create a Discord Webhook</h3>
+            <ol>
+                <li>Go to your Discord server</li>
+                <li>Open Server Settings (gear icon)</li>
+                <li>Navigate to "Integrations" → "Webhooks"</li>
+                <li>Click "New Webhook"</li>
+                <li>Choose a name (e.g., "PlsSize.Me Bot")</li>
+                <li>Select the channel where you want results to be posted</li>
+                <li>Copy the webhook URL</li>
+                <li>Click "Save Changes"</li>
+            </ol>
+        </div>
+
+        <div class="setup-step">
+            <h3>Step 5: Connect and Test</h3>
+            <ol>
+                <li>Go back to the PlsSize.Me homepage</li>
+                <li>Scroll to the "Discord Integration" section</li>
+                <li>Click "Connect Discord" and authorize the application</li>
+                <li>When prompted, paste your webhook URL</li>
+                <li>Run a calculation and click "Sync Results to Discord"</li>
+                <li>Check your Discord channel to see the results!</li>
+            </ol>
+        </div>
+
+        <h2>📋 Features</h2>
+        <ul>
+            <li><strong>Automatic Syncing:</strong> Post your results directly to Discord with one click</li>
+            <li><strong>Rich Embeds:</strong> Results are formatted beautifully with Discord embeds</li>
+            <li><strong>Private & Secure:</strong> Your data stays between you and your chosen Discord channel</li>
+            <li><strong>Share Links:</strong> Each sync includes a shareable link to view full results</li>
+            <li><strong>Sync History:</strong> Track how many times you've synced and when</li>
+        </ul>
+
+        <h2>🔒 Security Best Practices</h2>
+        <ul>
+            <li>Use a private Discord channel for sensitive results</li>
+            <li>Never share your Client Secret publicly</li>
+            <li>Regularly rotate your webhook URLs</li>
+            <li>Consider setting up a backend server for production use</li>
+            <li>Review Discord permissions carefully before authorizing</li>
+        </ul>
+
+        <h2>❓ Troubleshooting</h2>
+        
+        <div class="setup-step">
+            <h3>Connection Issues</h3>
+            <p>If you can't connect to Discord:</p>
+            <ul>
+                <li>Make sure your redirect URI is correctly configured</li>
+                <li>Check that your Client ID is correct</li>
+                <li>Verify you're using HTTPS (required by Discord)</li>
+                <li>Clear your browser cache and try again</li>
+            </ul>
+        </div>
+
+        <div class="setup-step">
+            <h3>Webhook Not Working</h3>
+            <p>If results aren't posting to Discord:</p>
+            <ul>
+                <li>Verify your webhook URL is correct and starts with <code>https://discord.com/api/webhooks/</code></li>
+                <li>Check that the webhook hasn't been deleted from Discord</li>
+                <li>Ensure you've run a calculation before trying to sync</li>
+                <li>Check your browser console for error messages</li>
+            </ul>
+        </div>
+
+        <h2>🔗 Useful Links</h2>
+        <ul>
+            <li><a href="https://discord.com/developers/docs/intro" target="_blank">Discord Developer Documentation</a></li>
+            <li><a href="https://discord.com/developers/docs/resources/webhook" target="_blank">Discord Webhook Documentation</a></li>
+            <li><a href="https://discord.com/developers/docs/topics/oauth2" target="_blank">Discord OAuth2 Documentation</a></li>
+        </ul>
+
+        <div class="cta-stack" style="margin-top: 40px;">
+            <button type="button" onclick="window.location.href='index.html'" class="button">
+                Back to Calculator
+            </button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 PlsSize.Me. All rights reserved.</p>
+    </footer>
+</body>
+</html>

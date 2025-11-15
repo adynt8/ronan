@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z4Q23E9QXZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-Z4Q23E9QXZ');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Information - PlsSize.Me</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.21.0"></script>
+    <script src="scripts/processData.js"></script>
+    <style>
+        .container ul {
+            padding-left: 30px;
+            margin-left: 15px;
+        }
+        .opt-in-button {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .opt-out-button {
+            background-color: #f44336;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Your Information</h1>
+        <div id="user-info">
+            <p>Loading your information...</p>
+        </div>
+        <div id="data-explanation"></div>
+        <div id="opt-in-section"></div>
+        <button onclick="window.location.href='index.html'" class="button">Back to Calculator</button>
+    </div>
+
+    <script>
+        // Remove these lines as they're already declared in processData.js
+        // const supabaseUrl = 'https://lcayhsjrmjkwxekutiih.supabase.co';
+        // const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxjYXloc2pybWprd3hla3V0aWloIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjUzMjQzNjMsImV4cCI6MjA0MDkwMDM2M30.HO8ykfrFvwxjhFt5XuDJ1aMvbbIRpnvYO4n18NqXqLc';
+        
+        // Use the existing supabaseClient from processData.js
+        // const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
+
+        async function fetchUserInfo() {
+            console.log('Fetching user info...');
+            const visitorId = localStorage.getItem('visitorId');
+            let shareMeasurements = localStorage.getItem('shareMeasurements') === 'true';
+            
+            console.log('Visitor ID:', visitorId);
+            console.log('Sharing Measurements:', shareMeasurements);
+
+            if (!visitorId) {
+                console.log('No visitor ID found');
+                document.getElementById('user-info').innerHTML = '<p>No visitor ID found. Please use the calculator first.</p>';
+                return;
+            }
+
+            let infoHtml = '';
+            let explanationHtml = '';
+            let optInHtml = '';
+
+            const unit = localStorage.getItem('penisCalcUnit') || 'cm';
+            const erectLength = localStorage.getItem('penisCalcErectLength');
+            const erectGirth = localStorage.getItem('penisCalcErectGirth');
+            const flaccidLength = localStorage.getItem('penisCalcFlaccidLength');
+            const flaccidGirth = localStorage.getItem('penisCalcFlaccidGirth');
+
+            console.log('Local measurements:', { unit, erectLength, erectGirth, flaccidLength, flaccidGirth });
+
+            try {
+                const { data, error } = await supabaseClient
+                    .from('visitor_data')
+                    .select('*')
+                    .eq('visitorId', visitorId)
+                    .single();
+
+                if (error) throw error;
+
+                if (data) {
+                    console.log('Data retrieved:', data);
+                    infoHtml = `
+                        <h2>${shareMeasurements ? 'Your Shared Data' : 'Your Basic Data'}</h2>
+                        <p><strong>Visitor ID:</strong> ${data.visitorId}</p>
+                        <p><strong>Visit Count:</strong> ${data.visitCount || 'N/A'}</p>
+                        <p><strong>Last Visit:</strong> ${new Date(data.timestamp).toLocaleString()}</p>
+                    `;
+
+                    if (shareMeasurements) {
+                        infoHtml += `
+                            <p><strong>Country:</strong> ${data.country || 'Not available'}</p>
+                            <h3>Your Measurements</h3>
+                            <p><strong>Unit:</strong> ${data.unit || unit}</p>
+                            <p><strong>Erect Length:</strong> ${data.erectLength || 'Not provided'} ${data.unit || unit}</p>
+                            <p><strong>Erect Girth:</strong> ${data.erectGirth || 'Not provided'} ${data.unit || unit}</p>
+                            <p><strong>Flaccid Length:</strong> ${data.flaccidLength || 'Not provided'} ${data.unit || unit}</p>
+                            <p><strong>Flaccid Girth:</strong> ${data.flaccidGirth || 'Not provided'} ${data.unit || unit}</p>
+                        `;
+                    } else {
+                        infoHtml += `
+                            <h3>Your Measurements (Stored Locally Only)</h3>
+                            <p><strong>Unit:</strong> ${unit}</p>
+                            <p><strong>Erect Length:</strong> ${erectLength || 'Not provided'} ${unit}</p>
+                            <p><strong>Erect Girth:</strong> ${erectGirth || 'Not provided'} ${unit}</p>
+                            <p><strong>Flaccid Length:</strong> ${flaccidLength || 'Not provided'} ${unit}</p>
+                            <p><strong>Flaccid Girth:</strong> ${flaccidGirth || 'Not provided'} ${unit}</p>
+                        `;
+                    }
+                } else {
+                    console.log('No data found');
+                    infoHtml = '<p>No data found for this visitor ID.</p>';
+                }
+            } catch (error) {
+                console.error('Error fetching user info:', error);
+                infoHtml = '<p>Error fetching your information. Please try again later.</p>';
+            }
+
+            if (shareMeasurements) {
+                explanationHtml = `
+                    <h2>Data Sharing Enabled</h2>
+                    <p>You are currently sharing your data with our database. This includes:</p>
+                    <ul>
+                        <li>Visitor ID (anonymous identifier)</li>
+                        <li>Visit Count</li>
+                        <li>Timestamp of last visit</li>
+                        <li>Country (if available)</li>
+                        <li>Your measurements (if provided)</li>
+                    </ul>
+                `;
+                optInHtml = '<button onclick="toggleDataSharing(false)" class="button opt-out-button">Opt Out of Data Sharing</button>';
+            } else {
+                explanationHtml = `
+                    <h2>Limited Data Sharing</h2>
+                    <p>You have chosen to limit data sharing. We only store:</p>
+                    <ul>
+                        <li>Visitor ID (anonymous identifier)</li>
+                        <li>Visit Count</li>
+                        <li>Timestamp of last visit</li>
+                    </ul>
+                    <p>Your measurements and other details are stored only on your device.</p>
+                `;
+                optInHtml = '<button onclick="toggleDataSharing(true)" class="button opt-in-button">Opt In to Full Data Sharing</button>';
+            }
+
+            document.getElementById('user-info').innerHTML = infoHtml;
+            document.getElementById('data-explanation').innerHTML = explanationHtml;
+            document.getElementById('opt-in-section').innerHTML = optInHtml;
+            console.log('User info display updated');
+        }
+
+        async function toggleDataSharing(enable) {
+            console.log('Toggling data sharing:', enable);
+            localStorage.setItem('shareMeasurements', enable);
+            const visitorId = localStorage.getItem('visitorId');
+            const timestamp = new Date().toISOString();
+
+            if (enable) {
+                console.log('Opting in to full data sharing');
+                const data = {
+                    visitorId: visitorId,
+                    timestamp: timestamp,
+                    unit: localStorage.getItem('penisCalcUnit'),
+                    erectLength: localStorage.getItem('penisCalcErectLength'),
+                    erectGirth: localStorage.getItem('penisCalcErectGirth'),
+                    flaccidLength: localStorage.getItem('penisCalcFlaccidLength'),
+                    flaccidGirth: localStorage.getItem('penisCalcFlaccidGirth'),
+                    country: localStorage.getItem('userCountry')
+                };
+                await processData(data);
+            } else {
+                console.log('Opting out of full data sharing');
+                try {
+                    const { data, error } = await supabaseClient
+                        .from('visitor_data')
+                        .update({
+                            timestamp: timestamp,
+                            unit: null,
+                            erectLength: null,
+                            erectGirth: null,
+                            flaccidLength: null,
+                            flaccidGirth: null,
+                            country: null
+                        })
+                        .eq('visitorId', visitorId);
+
+                    if (error) throw error;
+                    console.log('Data cleared successfully:', data);
+                } catch (error) {
+                    console.error('Error clearing data:', error);
+                }
+            }
+
+            // Refresh the page after toggling
+            window.location.reload();
+        }
+
+        // Wait for processData to be available
+        function waitForProcessData() {
+            if (typeof window.processData === 'function') {
+                fetchUserInfo();
+            } else {
+                setTimeout(waitForProcessData, 100);
+            }
+        }
+
+        waitForProcessData();
+    </script>
+</body>
+</html>

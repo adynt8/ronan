@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Authentication - PlsSize.Me</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        .auth-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            text-align: center;
+        }
+        .auth-spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #5865F2;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .auth-message {
+            font-size: 18px;
+            color: #333;
+            margin: 20px 0;
+        }
+        .auth-error {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        .auth-success {
+            color: #00d26a;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <h1>Discord Authentication</h1>
+        <div class="auth-spinner"></div>
+        <div id="auth-message" class="auth-message">
+            Connecting to Discord...
+        </div>
+    </div>
+
+    <script src="scripts/discordOAuth.js"></script>
+    <script>
+        async function processCallback() {
+            const messageEl = document.getElementById('auth-message');
+            
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const code = urlParams.get('code');
+                const state = urlParams.get('state');
+                const error = urlParams.get('error');
+                
+                if (error) {
+                    messageEl.textContent = `Authentication error: ${error}`;
+                    messageEl.classList.add('auth-error');
+                    setTimeout(() => {
+                        window.location.href = '/index.html';
+                    }, 3000);
+                    return;
+                }
+                
+                if (!code || !state) {
+                    messageEl.textContent = 'Invalid callback parameters';
+                    messageEl.classList.add('auth-error');
+                    setTimeout(() => {
+                        window.location.href = '/index.html';
+                    }, 3000);
+                    return;
+                }
+                
+                // Handle the OAuth callback
+                const success = await handleDiscordCallback(code, state);
+                
+                if (success) {
+                    messageEl.textContent = 'Successfully connected to Discord!';
+                    messageEl.classList.add('auth-success');
+                    
+                    // Prompt for webhook URL
+                    setTimeout(() => {
+                        const setupWebhook = confirm('Would you like to configure a webhook URL now?\n\nThis allows PlsSize.Me to post your results directly to your Discord server.');
+                        if (setupWebhook) {
+                            setDiscordWebhook();
+                        }
+                        window.location.href = '/index.html';
+                    }, 1500);
+                } else {
+                    messageEl.textContent = 'Failed to connect to Discord';
+                    messageEl.classList.add('auth-error');
+                    setTimeout(() => {
+                        window.location.href = '/index.html';
+                    }, 3000);
+                }
+            } catch (error) {
+                console.error('Error processing callback:', error);
+                messageEl.textContent = 'An error occurred during authentication';
+                messageEl.classList.add('auth-error');
+                setTimeout(() => {
+                    window.location.href = '/index.html';
+                }, 3000);
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', processCallback);
+    </script>
+</body>
+</html>

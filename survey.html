@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey - PlsSize.Me</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="container fade-in">
+        <h1>Survey</h1>
+        <p>We appreciate your feedback! Please take a moment to fill out our survey.</p>
+        <form id="surveyForm">
+            <h2>Demographic Information</h2>
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" min="18" max="100" required><br>
+
+            <label for="ethnicity">Ethnicity:</label>
+            <select id="ethnicity" name="ethnicity" required>
+                <option value="">Select ethnicity</option>
+                <option value="caucasian">Caucasian</option>
+                <option value="african">African</option>
+                <option value="asian">Asian</option>
+                <option value="hispanic">Hispanic</option>
+                <option value="middle-eastern">Middle Eastern</option>
+                <option value="mixed">Mixed</option>
+                <option value="other">Other</option>
+            </select><br>
+
+            <label for="country">Country of Residence:</label>
+            <input type="text" id="country" name="country" required><br>
+
+            <h2>Physical Measurements</h2>
+            <label for="height">Height (cm):</label>
+            <input type="number" id="height" name="height" min="100" max="250" step="0.1" required><br>
+
+            <label for="weight">Weight (kg):</label>
+            <input type="number" id="weight" name="weight" min="30" max="300" step="0.1" required><br>
+
+            <label for="erect-length">Erect Length (cm):</label>
+            <input type="number" id="erect-length" name="erect-length" min="0" max="30" step="0.1" required><br>
+
+            <label for="erect-girth">Erect Girth (cm):</label>
+            <input type="number" id="erect-girth" name="erect-girth" min="0" max="20" step="0.1" required><br>
+
+            <label for="flaccid-length">Flaccid Length (cm):</label>
+            <input type="number" id="flaccid-length" name="flaccid-length" min="0" max="20" step="0.1" required><br>
+
+            <label for="flaccid-girth">Flaccid Girth (cm):</label>
+            <input type="number" id="flaccid-girth" name="flaccid-girth" min="0" max="15" step="0.1" required><br>
+
+            <label for="measurement-method">Measurement Method:</label>
+            <select id="measurement-method" name="measurement-method" required>
+                <option value="">Select method</option>
+                <option value="ruler">Ruler (bone-pressed)</option>
+                <option value="tape">Measuring tape</option>
+                <option value="caliper">Caliper</option>
+                <option value="other">Other</option>
+            </select><br>
+
+            <h2>Sexual Health and Lifestyle</h2>
+            <label for="sexual-orientation">Sexual Orientation:</label>
+            <select id="sexual-orientation" name="sexual-orientation" required>
+                <option value="">Select orientation</option>
+                <option value="heterosexual">Heterosexual</option>
+                <option value="homosexual">Homosexual</option>
+                <option value="bisexual">Bisexual</option>
+                <option value="other">Other</option>
+            </select><br>
+
+            <label for="relationship-status">Relationship Status:</label>
+            <select id="relationship-status" name="relationship-status" required>
+                <option value="">Select status</option>
+                <option value="single">Single</option>
+                <option value="in-relationship">In a relationship</option>
+                <option value="married">Married</option>
+                <option value="other">Other</option>
+            </select><br>
+
+            <label for="sexual-frequency">Sexual Frequency (per month):</label>
+            <input type="number" id="sexual-frequency" name="sexual-frequency" min="0" max="100" required><br>
+
+            <label for="erectile-function">Erectile Function:</label>
+            <select id="erectile-function" name="erectile-function" required>
+                <option value="">Select option</option>
+                <option value="no-issues">No issues</option>
+                <option value="occasional-difficulty">Occasional difficulty</option>
+                <option value="frequent-difficulty">Frequent difficulty</option>
+                <option value="severe-difficulty">Severe difficulty</option>
+            </select><br>
+
+            <h2>Psychological Factors</h2>
+            <label for="size-satisfaction">How satisfied are you with your penis size?</label>
+            <select id="size-satisfaction" name="size-satisfaction" required>
+                <option value="">Select option</option>
+                <option value="very-satisfied">Very satisfied</option>
+                <option value="satisfied">Satisfied</option>
+                <option value="neutral">Neutral</option>
+                <option value="dissatisfied">Dissatisfied</option>
+                <option value="very-dissatisfied">Very dissatisfied</option>
+            </select><br>
+
+            <label for="size-anxiety">Do you experience anxiety about your penis size?</label>
+            <select id="size-anxiety" name="size-anxiety" required>
+                <option value="">Select option</option>
+                <option value="never">Never</option>
+                <option value="rarely">Rarely</option>
+                <option value="sometimes">Sometimes</option>
+                <option value="often">Often</option>
+                <option value="always">Always</option>
+            </select><br>
+
+            <label for="comparison-frequency">How often do you compare your size to others?</label>
+            <select id="comparison-frequency" name="comparison-frequency" required>
+                <option value="">Select option</option>
+                <option value="never">Never</option>
+                <option value="rarely">Rarely</option>
+                <option value="sometimes">Sometimes</option>
+                <option value="often">Often</option>
+                <option value="very-often">Very often</option>
+            </select><br>
+
+            <h2>Partner Feedback (if applicable)</h2>
+            <label for="partner-satisfaction">How satisfied is your partner with your penis size?</label>
+            <select id="partner-satisfaction" name="partner-satisfaction">
+                <option value="">Select option</option>
+                <option value="very-satisfied">Very satisfied</option>
+                <option value="satisfied">Satisfied</option>
+                <option value="neutral">Neutral</option>
+                <option value="dissatisfied">Dissatisfied</option>
+                <option value="very-dissatisfied">Very dissatisfied</option>
+                <option value="not-applicable">Not applicable</option>
+            </select><br>
+
+            <label for="partner-comments">Any specific feedback from your partner about your size?</label>
+            <textarea id="partner-comments" name="partner-comments" rows="3"></textarea><br>
+
+            <h2>Additional Comments</h2>
+            <label for="general-comments">Any other comments or experiences you'd like to share?</label>
+            <textarea id="general-comments" name="general-comments" rows="4"></textarea><br>
+
+            <button type="submit" class="button">Submit Survey</button>
+        </form>
+        <button onclick="window.location.href='index.html'" class="button">Back to Home</button>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 PlsSize.Me. All rights reserved.</p>
+    </footer>
+
+    <!-- Import processData.js before our script -->
+    <script src="scripts/processData.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const length = urlParams.get('length');
+            const girth = urlParams.get('girth');
+            const flaccidLength = urlParams.get('flaccidLength');
+            const flaccidGirth = urlParams.get('flaccidGirth');
+            const unit = urlParams.get('unit');
+
+            if (length) document.getElementById('erect-length').value = length;
+            if (girth) document.getElementById('erect-girth').value = girth;
+            if (flaccidLength) document.getElementById('flaccid-length').value = flaccidLength;
+            if (flaccidGirth) document.getElementById('flaccid-girth').value = flaccidGirth;
+
+            // Add unit to labels if provided
+            if (unit) {
+                const labels = document.querySelectorAll('label[for^="erect-"], label[for^="flaccid-"]');
+                labels.forEach(label => {
+                    label.textContent = label.textContent.replace(/\(.*\)/, `(${unit})`);
+                });
+            }
+        });
+
+        document.querySelector('form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const surveyData = Object.fromEntries(formData.entries());
+
+            // Add timestamp and visitor ID
+            surveyData.timestamp = new Date().toISOString();
+            surveyData.visitorId = localStorage.getItem('visitorId') || 'unknown';
+
+            try {
+                await saveSurveyData(surveyData);
+                alert('Thank you for submitting the survey!');
+                window.location.href = 'index.html';
+            } catch (error) {
+                console.error('Error saving survey data:', error);
+                alert('There was an error submitting the survey. Please try again.');
+            }
+        });
+
+        async function saveSurveyData(surveyData) {
+            try {
+                const repoOwner = 'APSCPLM';
+                const repoName = 'User-Data';
+                const filePath = 'survey_results.json';
+                const url = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/${filePath}`;
+
+                // Fetch current content
+                const response = await fetch(url, {
+                    headers: {
+                        'Accept': 'application/vnd.github.v3+json'
+                    }
+                });
+
+                let currentContent = [];
+                let sha;
+
+                if (response.ok) {
+                    const data = await response.json();
+                    sha = data.sha;
+                    currentContent = JSON.parse(atob(data.content));
+                } else if (response.status !== 404) {
+                    throw new Error(`Failed to fetch current file content: ${response.status}`);
+                }
+
+                // Add new survey data
+                currentContent.push(surveyData);
+
+                // Encode updated content
+                const updatedContent = btoa(JSON.stringify(currentContent, null, 2));
+
+                // Update file on GitHub
+                const token = await getGitHubToken(); // Fetch token from processData.js
+                const updateResponse = await fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${token}`,
+                        'Accept': 'application/vnd.github.v3+json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: `Add survey result for visitor ID: ${surveyData.visitorId}`,
+                        content: updatedContent,
+                        sha: sha // Include sha if updating existing file
+                    }),
+                });
+
+                if (!updateResponse.ok) {
+                    throw new Error(`Failed to update file: ${updateResponse.status}`);
+                }
+
+                console.log('Survey data saved successfully');
+            } catch (error) {
+                console.error('Error in saveSurveyData:', error);
+                throw error;
+            }
+        }
+    </script>
+</body>
+</html>

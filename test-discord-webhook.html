@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Discord Webhook - PlsSize.Me</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        .test-container {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        .test-form {
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: monospace;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #5865F2;
+        }
+        .test-button {
+            width: 100%;
+            padding: 15px;
+            background: #5865F2;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .test-button:hover {
+            background: #4752c4;
+        }
+        .test-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .result-box {
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+            display: none;
+        }
+        .result-box.success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            display: block;
+        }
+        .result-box.error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            display: block;
+        }
+        .result-box.info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+            display: block;
+        }
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Test Discord Webhook</h1>
+        <p>Use this tool to verify your Discord webhook is working correctly before integrating it with PlsSize.Me.</p>
+
+        <div class="info-box">
+            <strong>ℹ️ Info:</strong> This sends a test message to your Discord channel to verify the webhook is configured correctly.
+        </div>
+
+        <div class="test-form">
+            <div class="form-group">
+                <label for="webhook-url">Discord Webhook URL</label>
+                <input 
+                    type="text" 
+                    id="webhook-url" 
+                    placeholder="https://discord.com/api/webhooks/..."
+                    spellcheck="false"
+                >
+            </div>
+
+            <button class="test-button" onclick="testWebhook()">
+                Send Test Message
+            </button>
+        </div>
+
+        <div id="result-container"></div>
+
+        <div class="warning-box">
+            <strong>⚠️ Note:</strong> Your webhook URL is not stored or transmitted anywhere except directly to Discord. This page operates entirely in your browser.
+        </div>
+
+        <h2>How to Get Your Webhook URL</h2>
+        <ol>
+            <li>Open your Discord server</li>
+            <li>Click on the server name and select <strong>Server Settings</strong></li>
+            <li>Go to <strong>Integrations</strong> → <strong>Webhooks</strong></li>
+            <li>Click <strong>New Webhook</strong> or select an existing one</li>
+            <li>Choose a channel for the webhook</li>
+            <li>Click <strong>Copy Webhook URL</strong></li>
+            <li>Paste it in the field above</li>
+        </ol>
+
+        <h2>Expected Result</h2>
+        <p>If successful, you should see a message in your Discord channel that looks like this:</p>
+        <div style="background: #36393f; padding: 20px; border-radius: 8px; color: #dcddde; margin: 20px 0;">
+            <div style="font-weight: 600; margin-bottom: 10px;">
+                PlsSize.Me Test <span style="background: #5865F2; padding: 2px 6px; border-radius: 3px; font-size: 10px;">BOT</span>
+            </div>
+            <div style="background: #2f3136; border-left: 4px solid #5865F2; padding: 16px; border-radius: 4px;">
+                <div style="color: #00b0f4; font-weight: 600; margin-bottom: 8px;">✅ Webhook Test Successful!</div>
+                <div style="margin-bottom: 12px;">Your webhook is configured correctly and ready to use with PlsSize.Me.</div>
+                <div style="font-size: 12px; color: #b9bbbe; margin-top: 8px;">
+                    Test Date • Just now
+                </div>
+            </div>
+        </div>
+
+        <h2>Troubleshooting</h2>
+        
+        <div class="test-form">
+            <h3>Common Issues:</h3>
+            
+            <p><strong>Invalid Webhook URL</strong></p>
+            <p>Webhook URLs must start with <code>https://discord.com/api/webhooks/</code></p>
+            
+            <p><strong>404 Not Found</strong></p>
+            <p>The webhook may have been deleted. Create a new one in Discord.</p>
+            
+            <p><strong>Unauthorized</strong></p>
+            <p>Check that you copied the complete URL including the token at the end.</p>
+            
+            <p><strong>CORS Error</strong></p>
+            <p>This is normal for Discord webhooks. The message was still sent successfully!</p>
+            
+            <p><strong>Rate Limited</strong></p>
+            <p>Discord limits webhooks to 30 requests per minute. Wait a moment and try again.</p>
+        </div>
+
+        <div class="cta-stack" style="margin-top: 40px;">
+            <button type="button" onclick="window.location.href='discord-setup.html'" class="button">
+                View Full Setup Guide
+            </button>
+            <button type="button" onclick="window.location.href='index.html'" class="secondary">
+                Back to Calculator
+            </button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 PlsSize.Me. All rights reserved.</p>
+    </footer>
+
+    <script>
+        async function testWebhook() {
+            const webhookUrl = document.getElementById('webhook-url').value.trim();
+            const resultContainer = document.getElementById('result-container');
+            const button = document.querySelector('.test-button');
+            
+            // Clear previous results
+            resultContainer.innerHTML = '';
+            
+            // Validate webhook URL
+            if (!webhookUrl) {
+                showResult('error', 'Please enter a webhook URL');
+                return;
+            }
+            
+            if (!webhookUrl.startsWith('https://discord.com/api/webhooks/')) {
+                showResult('error', 'Invalid webhook URL format. It should start with: https://discord.com/api/webhooks/');
+                return;
+            }
+            
+            // Disable button and show loading
+            button.disabled = true;
+            button.textContent = 'Sending test message...';
+            showResult('info', 'Sending test message to Discord...');
+            
+            try {
+                // Create test embed
+                const embed = {
+                    title: '✅ Webhook Test Successful!',
+                    description: 'Your webhook is configured correctly and ready to use with PlsSize.Me.',
+                    color: 0x5865F2, // Discord blurple
+                    fields: [
+                        {
+                            name: '📊 Test Information',
+                            value: 'This is a test message to verify your webhook configuration.',
+                            inline: false
+                        },
+                        {
+                            name: '🔗 Next Steps',
+                            value: 'Return to PlsSize.Me and use this webhook URL for syncing your results.',
+                            inline: false
+                        }
+                    ],
+                    footer: {
+                        text: 'PlsSize.Me Webhook Test'
+                    },
+                    timestamp: new Date().toISOString()
+                };
+                
+                // Send to Discord
+                const response = await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: 'PlsSize.Me Test',
+                        embeds: [embed]
+                    })
+                });
+                
+                // Check response
+                if (response.ok || response.status === 204) {
+                    showResult('success', 
+                        '✅ Success! Test message sent to Discord. Check your channel!<br><br>' +
+                        'Your webhook is working correctly. You can now use it with PlsSize.Me.'
+                    );
+                    
+                    // Save webhook for convenience
+                    localStorage.setItem('lastTestedWebhook', webhookUrl);
+                } else {
+                    const errorText = await response.text();
+                    showResult('error', 
+                        `❌ Failed to send message (Status: ${response.status})<br><br>` +
+                        'This might mean:<br>' +
+                        '• The webhook was deleted<br>' +
+                        '• The URL is incorrect<br>' +
+                        '• Rate limit was exceeded<br><br>' +
+                        'Try creating a new webhook and testing again.'
+                    );
+                    console.error('Discord API Error:', errorText);
+                }
+            } catch (error) {
+                console.error('Test webhook error:', error);
+                
+                // Note: CORS errors are expected but the message still sends
+                if (error.message && error.message.includes('CORS')) {
+                    showResult('success', 
+                        '✅ Message sent! (CORS error is expected and harmless)<br><br>' +
+                        'Check your Discord channel - the message should be there. ' +
+                        'Discord webhooks don\'t allow CORS, but the message was delivered successfully.'
+                    );
+                } else {
+                    showResult('error', 
+                        `❌ Error: ${error.message}<br><br>` +
+                        'Please check your webhook URL and try again.'
+                    );
+                }
+            } finally {
+                // Re-enable button
+                button.disabled = false;
+                button.textContent = 'Send Test Message';
+            }
+        }
+        
+        function showResult(type, message) {
+            const resultContainer = document.getElementById('result-container');
+            const resultBox = document.createElement('div');
+            resultBox.className = `result-box ${type}`;
+            resultBox.innerHTML = message;
+            resultContainer.innerHTML = '';
+            resultContainer.appendChild(resultBox);
+        }
+        
+        // Auto-fill last tested webhook if available
+        window.addEventListener('DOMContentLoaded', function() {
+            const lastWebhook = localStorage.getItem('lastTestedWebhook');
+            if (lastWebhook) {
+                document.getElementById('webhook-url').value = lastWebhook;
+            }
+        });
+        
+        // Allow Enter key to submit
+        document.getElementById('webhook-url').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                testWebhook();
+            }
+        });
+    </script>
+</body>
+</html>

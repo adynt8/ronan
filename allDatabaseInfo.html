@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Database Information</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100 text-gray-900">
+    <div class="container mx-auto p-4">
+        <h1 class="text-5xl font-bold text-center mb-6 text-blue-600">All Database Information</h1>
+        <div id="db-info" class="bg-white p-8 rounded-lg shadow-lg">
+            <h2 class="text-3xl font-semibold mb-6 text-gray-800">Entries Sorted by Timestamp</h2>
+            <table class="min-w-full bg-white">
+                <thead>
+                    <tr>
+                        <th class="py-2">Timestamp</th>
+                        <th class="py-2">Visitor ID</th>
+                        <th class="py-2">Unit</th> <!-- Added unit header -->
+                        <th class="py-2">Erect Length</th>
+                        <th class="py-2">Erect Girth</th>
+                        <th class="py-2">Flaccid Length</th>
+                        <th class="py-2">Flaccid Girth</th>
+                        <th class="py-2">Visit Count</th>
+                        <th class="py-2">Note</th>
+                    </tr>
+                </thead>
+                <tbody id="db-entries">
+                    <!-- Entries will be populated here -->
+                </tbody>
+            </table>
+        </div>
+
+        <div id="daily-visits" class="bg-white p-8 rounded-lg shadow-lg mt-6">
+            <h2 class="text-3xl font-semibold mb-6 text-gray-800">Number of Visits Per Day</h2>
+            <table class="min-w-full bg-white">
+                <thead>
+                    <tr>
+                        <th class="py-2">Date</th>
+                        <th class="py-2">Visit Count</th>
+                    </tr>
+                </thead>
+                <tbody id="daily-visit-entries">
+                    <!-- Daily visit counts will be populated here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer class="bg-gray-800 text-white text-center py-4 mt-12">
+        <p>&copy; 2024 PlsSize.Me. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.21.0"></script>
+    <script src="scripts/fetchAllDatabaseInfo.js"></script>
+</body>
+</html>

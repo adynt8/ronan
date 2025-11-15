@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kink Test - PlsSize.Me</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Add Supabase JS library -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <style>
+        body {
+            background-color: #1a202c;
+            color: #f7fafc;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            width: 100%;
+            padding: 30px;
+            background-color: #2d3748;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+        h1, h2, .question-text {
+            color: #63b3ed;
+        }
+        .button {
+            background-color: #63b3ed;
+            color: #000000;
+            padding: 12px 24px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 15px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .button:hover {
+            background-color: #4299e1;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .button:disabled {
+            background-color: #4a5568;
+            cursor: not-allowed;
+        }
+        .question-container {
+            transition: opacity 0.5s ease-in-out;
+        }
+        .fade-out {
+            opacity: 0;
+        }
+        .fade-in {
+            opacity: 1;
+        }
+        .option {
+            transition: all 0.3s ease;
+            background-color: #4a5568;
+            color: #f7fafc;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 8px;
+            flex: 1 1 45%;
+            text-align: center;
+            font-size: 0.9rem;
+            min-width: 120px;
+            cursor: pointer;
+        }
+        .option:hover {
+            transform: translateY(-2px);
+            background-color: #63b3ed;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .option.selected {
+            background-color: #63b3ed;
+            color: #000000;
+            font-weight: bold;
+        }
+        .options-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: space-between;
+        }
+        #results-container {
+            background-color: #2d3748;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            max-width: 100%;
+            overflow: hidden;
+        }
+        #results-list {
+            margin-bottom: 10px;
+            font-size: 1rem;
+            line-height: 1.4;
+        }
+        #results-list li {
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            background-color: #3b4252;
+            transition: all 0.3s ease;
+        }
+        #results-list li:hover {
+            transform: translateX(5px);
+        }
+        #progress-bar {
+            height: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-4xl font-bold text-center mb-6 animate__animated animate__fadeInDown">Kink Test</h1>
+        <div id="test-selection" class="p-6 rounded-lg shadow-lg mb-6 bg-gray-700">
+            <h2 class="text-2xl font-semibold mb-4">Choose Test Version</h2>
+            <div class="flex flex-col space-y-4">
+                <button id="short-test" class="button">Short Version</button>
+                <button id="long-test" class="button">Long Version</button>
+            </div>
+        </div>
+        <div id="test-container" class="p-6 rounded-lg shadow-lg bg-gray-700" style="display: none;">
+            <div class="mb-4 bg-gray-200 rounded-full">
+                <div id="progress-bar" class="bg-indigo-500 text-xs font-medium text-white text-center p-0.5 leading-none rounded-full transition-all duration-300 ease-in-out" style="width: 0%">0%</div>
+/            </div>
+            <div id="questions-container" class="mb-6 question-container">
+                <!-- Questions will be dynamically inserted here -->
+            </div>
+            <button id="next-button" class="button" disabled>Next</button>
+            <button id="auto-fill-button" class="button bg-gray-500 hover:bg-gray-600 text-white mt-4">Auto Fill</button>
+        </div>
+        <div id="results-container" class="p-6 rounded-lg shadow-lg mt-6 bg-gray-700" style="display: none;">
+            <h2 class="text-3xl font-semibold mb-6">Your Kink Profile</h2>
+            <ul id="results-list" class="space-y-3"></ul>
+            <button id="retake-test" class="button mt-6">Retake Test</button>
+        </div>
+    </div>
+    <script src="scripts/kink-test.js" type="module"></script>
+</body>
+</html>

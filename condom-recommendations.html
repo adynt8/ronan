@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlsSize.Me - Condom Recommendations</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        /* Basic styles for better visual appeal */
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            text-align: center;
+        }
+        .result-box {
+            margin: 10px 0;
+        }
+        .condom-link {
+            text-decoration: none;
+            color: #007BFF;
+        }
+        .condom-link:hover {
+            text-decoration: underline;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" role="main">
+        <h1>PlsSize.Me - Condom Recommendations</h1>
+        <p>Based on your nominal width of <span id="nominal-width"></span> mm, here are some recommended condoms:</p>
+        <div id="recommendations" aria-live="polite"></div>
+        <button onclick="window.location.href='index.html'" class="button" id="back-button">Back to Calculator</button>
+    </div>
+
+    <script>
+        const condomRecommendations = [
+            { minWidth: 45, maxWidth: 50, brands: [
+                { name: "Caution Wear Iron Grip" },
+                { name: "Glyde Slimfit" },
+                { name: "Kimono MicroThin Ultra Small" },
+                { name: "Beyond Seven Sheerlon" },
+                { name: "Trojan ENZ Small" },
+                { name: "ONE The Legend" }
+            ]},
+            { minWidth: 51, maxWidth: 53, brands: [
+                { name: "Durex Close Fit" },
+                { name: "GLYDE Slim Fit" },
+                { name: "Kimono MicroThin" },
+                { name: "Okamoto 004" },
+                { name: "Crown Skinless Skin" },
+                { name: "Beyond Seven Studded" }
+            ]},
+            { minWidth: 54, maxWidth: 56, brands: [
+                { name: "Durex Enhanced Pleasure" },
+                { name: "Lifestyles Snugger Fit" },
+                { name: "Okamoto 004" },
+                { name: "ONE Vanish Hyperthin" },
+                { name: "Trojan Bareskin" },
+                { name: "SKYN Original" }
+            ]},
+            { minWidth: 57, maxWidth: 60, brands: [
+                { name: "Trojan ENZ" },
+                { name: "Durex Invisible" },
+                { name: "SKYN Original" },
+                { name: "Lifestyles SKYN Elite" },
+                { name: "ONE Pleasure Plus" },
+                { name: "Kimono MicroThin Large" }
+            ]},
+            { minWidth: 61, maxWidth: 64, brands: [
+                { name: "Trojan Magnum" },
+                { name: "Durex XXL" },
+                { name: "MyOne Perfect Fit (Larger Sizes)" },
+                { name: "SKYN Large" },
+                { name: "ONE The Legend XL" },
+                { name: "Lifestyles KYNG" }
+            ]},
+            { minWidth: 65, maxWidth: 69, brands: [
+                { name: "Trojan Magnum XL" },
+                { name: "MyOne Perfect Fit (Largest Sizes)" },
+                { name: "Pasante King Size" },
+                { name: "TheyFit Larger Sizes" },
+                { name: "ONE The Legend XXL" },
+                { name: "Durex XXL" }
+            ]},
+            { minWidth: 70, maxWidth: 80, brands: [
+                { name: "MySize Pro 72" },
+                { name: "TheyFit Largest Sizes" },
+                { name: "Pasante Super King" },
+                { name: "Unique Plus XXL" },
+                { name: "FC2 Female Condom" },
+                { name: "Trojan Magnum XXL" }
+            ]}
+        ];
+
+        function getRecommendations(nominalWidth) {
+            const recommendations = condomRecommendations.find(r => nominalWidth >= r.minWidth && nominalWidth <= r.maxWidth);
+            return recommendations ? recommendations.brands : [{ name: "No specific recommendations. Consider custom-fit condoms." }];
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const nominalWidth = urlParams.get('nominalWidth');
+            
+            if (nominalWidth) {
+                document.getElementById('nominal-width').textContent = nominalWidth;
+                const recommendations = getRecommendations(parseFloat(nominalWidth));
+                const recommendationsDiv = document.getElementById('recommendations');
+                
+                recommendations.forEach(brand => {
+                    const div = document.createElement('div');
+                    div.className = 'result-box';
+                    div.textContent = brand.name;
+                    recommendationsDiv.appendChild(div);
+                });
+            } else {
+                document.getElementById('recommendations').innerHTML = '<p class="error">Error: No nominal width provided. Please go back and enter a nominal width.</p>';
+            }
+        });
+    </script>
+</body>
+</html>
