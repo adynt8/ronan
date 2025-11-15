@@ -1,0 +1,40 @@
+const objectComparisons = {
+    cm: [
+        { name: "AA battery", length: 5.0, girth: 1.4 },
+        { name: "Banana", length: 18.0, girth: 12.0 },
+        { name: "iPhone 12", length: 14.6, girth: 7.1 },
+        { name: "Soda can", length: 12.2, girth: 21.0 },
+        { name: "Credit card", length: 8.5, girth: 5.4 },
+        { name: "Golf ball", length: 4.3, girth: 13.4 },
+        { name: "Toothbrush", length: 19.0, girth: 2.0 },
+        { name: "Pencil", length: 19.0, girth: 1.0 },
+        { name: "Cucumber", length: 20.0, girth: 14.0 },
+        { name: "Remote control", length: 15.0, girth: 4.5 },
+        { name: "Hotdog", length: 15.2, girth: 10.0 },
+        { name: "Carrot", length: 16.0, girth: 8.0 },
+        { name: "Eggplant", length: 21.0, girth: 18.0 },
+        { name: "Corn on the cob", length: 17.8, girth: 14.0 },
+        { name: "Zucchini", length: 20.3, girth: 12.0 },
+        { name: "Baseball bat", length: 85.0, girth: 7.0 },
+        { name: "Water bottle", length: 25.0, girth: 23.0 }
+    ],
+    in: [
+        { name: "AA battery", length: 1.97, girth: 0.55 },
+        { name: "Banana", length: 7.09, girth: 4.72 },
+        { name: "iPhone 12", length: 5.75, girth: 2.80 },
+        { name: "Soda can", length: 4.80, girth: 8.27 },
+        { name: "Credit card", length: 3.35, girth: 2.13 },
+        { name: "Golf ball", length: 1.69, girth: 5.28 },
+        { name: "Toothbrush", length: 7.48, girth: 0.79 },
+        { name: "Pencil", length: 7.48, girth: 0.39 },
+        { name: "Cucumber", length: 7.87, girth: 5.51 },
+        { name: "Remote control", length: 5.91, girth: 1.77 },
+        { name: "Hotdog", length: 5.98, girth: 3.94 },
+        { name: "Carrot", length: 6.30, girth: 3.15 },
+        { name: "Eggplant", length: 8.27, girth: 7.09 },
+        { name: "Corn on the cob", length: 7.01, girth: 5.51 },
+        { name: "Zucchini", length: 7.99, girth: 4.72 },
+        { name: "Baseball bat", length: 33.46, girth: 2.76 },
+        { name: "Water bottle", length: 9.84, girth: 9.06 }
+    ]
+};
