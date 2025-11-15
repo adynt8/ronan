@@ -1,7 +1,14 @@
 // Discord OAuth Configuration
+// To avoid committing secrets or hardcoding values, this file will try to read
+// the client ID from window.DISCORD_CLIENT_ID. If that is not set, a placeholder
+// will be used and the UI will warn the user and prevent starting the OAuth flow.
+//
+// If you prefer to keep the client id in the file, replace the placeholder with
+// the numeric Discord application client ID (a "snowflake", e.g. "1438380414837198980").
+const DEFAULT_CLIENT_ID_PLACEHOLDER = '1438380414837198980';
 const DISCORD_CONFIG = {
-    clientId: '1438380414837198980', // Replace with your Discord application client ID
-    redirectUri: window.location.origin + '/discord-callback.html',
+    clientId: (typeof window !== 'undefined' && window.DISCORD_CLIENT_ID) ? String(window.DISCORD_CLIENT_ID) : DEFAULT_CLIENT_ID_PLACEHOLDER,
+    redirectUri: (typeof window !== 'undefined' ? window.location.origin : '') + '/discord-callback.html',
     scopes: ['identify', 'webhook.incoming'],
     apiEndpoint: 'https://discord.com/api/v10'
 };
@@ -14,6 +21,11 @@ let discordConnection = {
     webhookUrl: null,
     guildId: null
 };
+
+// Helper: validate Discord snowflake (client IDs are numeric strings, typically 17-19 digits)
+function isValidSnowflake(id) {
+    return typeof id === 'string' && /^\d{17,19}$/.test(id);
+}
 
 // Initialize Discord connection from localStorage
 function initDiscordConnection() {
@@ -35,6 +47,18 @@ function saveDiscordConnection() {
 
 // Start Discord OAuth flow
 function connectDiscord() {
+    if (!isValidSnowflake(DISCORD_CONFIG.clientId)) {
+        // Provide a clear and actionable message
+        alert(
+            'Discord client ID is not configured or invalid.\n\n' +
+            'Set a valid numeric Discord application client ID (a "snowflake") by assigning it to window.DISCORD_CLIENT_ID before this script runs.\n\n' +
+            'Example (in a script tag before this file):\n' +
+            '  <script>window.DISCORD_CLIENT_ID = "1438380414837198980";</script>'
+        );
+        console.error('Invalid or missing DISCORD_CLIENT_ID:', DISCORD_CONFIG.clientId);
+        return;
+    }
+
     const state = generateRandomState();
     localStorage.setItem('discord_oauth_state', state);
     
@@ -71,6 +95,11 @@ async function handleDiscordCallback(code, state) {
         return false;
     }
     
+    if (!isValidSnowflake(DISCORD_CONFIG.clientId)) {
+        console.error('Cannot exchange code for token: invalid DISCORD_CLIENT_ID', DISCORD_CONFIG.clientId);
+        return false;
+    }
+    
     try {
         // Exchange code for access token
         const tokenResponse = await fetch(`${DISCORD_CONFIG.apiEndpoint}/oauth2/token`, {
@@ -80,7 +109,7 @@ async function handleDiscordCallback(code, state) {
             },
             body: new URLSearchParams({
                 client_id: DISCORD_CONFIG.clientId,
-                client_secret: 'Y18CEUTMr-Yppqtq3fj3tf2U8ZeuHFM-', // In production, this should be handled server-side
+                client_secret: 'Y18CEUTMr-Yppqtq3fj3tf2U8ZeuHFM-', // In production, this must be handled server-side
                 grant_type: 'authorization_code',
                 code: code,
                 redirect_uri: DISCORD_CONFIG.redirectUri
@@ -268,6 +297,7 @@ function updateDiscordUI() {
     const statusDiv = document.getElementById('discord-status');
     
     if (connectBtn && syncBtn && statusDiv) {
+        const clientIdValid = isValidSnowflake(DISCORD_CONFIG.clientId);
         if (discordConnection.connected) {
             connectBtn.textContent = '🔌 Disconnect Discord';
             connectBtn.onclick = disconnectDiscord;
@@ -296,12 +326,30 @@ function updateDiscordUI() {
             connectBtn.textContent = '🔗 Connect Discord';
             connectBtn.onclick = connectDiscord;
             
+            // If client id is not configured properly, disable connect and surface an instructional message
+            if (!clientIdValid) {
+                syncBtn.disabled = true;
+                syncBtn.style.opacity = '0.5';
+                syncBtn.style.cursor = 'not-allowed';
+                
+                const example = DEFAULT_CLIENT_ID_PLACEHOLDER;
+                statusDiv.textContent = '⚠️ Discord client ID not configured. Set window.DISCORD_CLIENT_ID to your numeric client ID.';
+                statusDiv.style.color = '#e07b39';
+                connectBtn.disabled = true;
+                connectBtn.style.opacity = '0.5';
+                connectBtn.style.cursor = 'not-allowed';
+                return;
+            }
+            
             syncBtn.disabled = true;
             syncBtn.style.opacity = '0.5';
             syncBtn.style.cursor = 'not-allowed';
             
             statusDiv.textContent = '⚠️ Not connected to Discord';
             statusDiv.style.color = '#999';
+            connectBtn.disabled = false;
+            connectBtn.style.opacity = '1';
+            connectBtn.style.cursor = 'pointer';
         }
     }
 }
