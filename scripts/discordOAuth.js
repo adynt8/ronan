@@ -8,7 +8,7 @@
 const DEFAULT_CLIENT_ID_PLACEHOLDER = '1438380414837198980';
 const DISCORD_CONFIG = {
     clientId: (typeof window !== 'undefined' && window.DISCORD_CLIENT_ID) ? String(window.DISCORD_CLIENT_ID) : DEFAULT_CLIENT_ID_PLACEHOLDER,
-    redirectUri: (typeof window !== 'undefined' ? window.location.origin : '') + '/discord-callback.html',
+    redirectUri: 'https://adynt8.github.io/ronan/discord-callback.html',
     scopes: ['identify', 'webhook.incoming'],
     apiEndpoint: 'https://discord.com/api/v10'
 };
